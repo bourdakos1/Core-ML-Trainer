@@ -23,28 +23,6 @@ class ClassesCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-//
-//        do {
-//            // Get the directory contents urls (including subfolders urls)
-//            let directoryContents = try FileManager.default.contentsOfDirectory(at: documentsUrl.appendingPathComponent(classifier.id!), includingPropertiesForKeys: nil, options: [])
-//
-//            let files = directoryContents.map{ $0.pathComponents.last! }
-//
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-        
-//        classes = []
-//        for result in classifier.relationship?.allObjects as! [PendingClass] {
-//            classes.append(grabPhoto(for: result))
-//        }
-//
-//        let epoch = Date().addingTimeInterval(0 - Date().timeIntervalSince1970)
-//        classes = classes.sorted(by: { $0.pendingClass.created ?? epoch < $1.pendingClass.created ?? epoch })
-//
-//        reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {

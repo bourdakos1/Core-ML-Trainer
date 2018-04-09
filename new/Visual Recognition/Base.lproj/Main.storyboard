@@ -394,43 +394,43 @@
                         <viewControllerLayoutGuide type="bottom" id="xum-qh-sVe"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dFP-ts-kco">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ecp-t6-OPK">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                                 <connections>
                                     <segue destination="KjQ-Zt-9VL" kind="embed" identifier="embedClasses" id="Mit-R0-19D"/>
                                 </connections>
                             </containerView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scrim_white.png" translatesAutoresizingMaskIntoConstraints="NO" id="maY-yM-UMb">
-                                <rect key="frame" x="0.0" y="107" width="375" height="43"/>
+                                <rect key="frame" x="0.0" y="43" width="375" height="43"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="pTk-gR-cti"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="evb-iT-Gds">
-                                <rect key="frame" x="0.0" y="64" width="375" height="43"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="OMS-uJ-zW4"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bottom_scrim_white.png" translatesAutoresizingMaskIntoConstraints="NO" id="0nT-Io-TnT">
-                                <rect key="frame" x="0.0" y="581" width="375" height="43"/>
+                                <rect key="frame" x="0.0" y="465" width="375" height="43"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="0I1-N7-0fb"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oZW-KG-8vP">
-                                <rect key="frame" x="0.0" y="624" width="375" height="43"/>
+                                <rect key="frame" x="0.0" y="508" width="375" height="43"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="LT3-03-rnl"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8I-I0-cNf" customClass="RoundedButton" customModule="Visual_Recognition" customModuleProvider="target">
-                                <rect key="frame" x="20" y="601" width="335" height="46"/>
+                                <rect key="frame" x="20" y="485" width="335" height="46"/>
                                 <state key="normal">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -441,18 +441,18 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="train_send.png" translatesAutoresizingMaskIntoConstraints="NO" id="FSP-Jl-T6D">
-                                <rect key="frame" x="176" y="613" width="22" height="22"/>
+                                <rect key="frame" x="176" y="497" width="22" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="0uZ-fX-aK3"/>
                                     <constraint firstAttribute="width" constant="22" id="Unf-Iz-812"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fuo-Lg-toa">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Model Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fg8-Ed-1ju">
-                                <rect key="frame" x="20" y="84" width="335" height="46"/>
+                                <rect key="frame" x="20" y="20" width="335" height="46"/>
                                 <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="13q-4r-Trz"/>
@@ -510,7 +510,7 @@
             <objects>
                 <collectionViewController id="KjQ-Zt-9VL" customClass="ClassesCollectionViewController" customModule="Visual_Recognition" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" dataMode="prototypes" id="YuO-F0-Ufj">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="BhV-RX-LO2">
@@ -677,11 +677,10 @@
             <objects>
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="FDT-sa-UqY" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" shadowImage="api.png" id="b8m-IB-9qV">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" translucent="NO" largeTitles="YES" id="b8m-IB-9qV">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -775,7 +774,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="api.png" width="41" height="133"/>
         <image name="bottom_scrim_white.png" width="66" height="65"/>
         <image name="btn_dropdown.png" width="76" height="76"/>
         <image name="cancel.png" width="100" height="100"/>

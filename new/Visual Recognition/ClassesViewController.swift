@@ -13,9 +13,16 @@ class ClassesViewController: UIViewController, UICollectionViewDelegateFlowLayou
     
     @IBOutlet weak var blackBackground: UIView!
     @IBOutlet weak var classifierName: UITextField!
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if #available(iOS 11.0, *) {
+            self.navigationController?.navigationBar.prefersLargeTitles = false
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         blackBackground.isHidden = true
 
         classifierName.layer.shadowColor = UIColor.black.cgColor

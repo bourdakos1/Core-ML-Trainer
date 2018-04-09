@@ -11,9 +11,9 @@ import CoreData
 import Alamofire
 
 class ClassifiersTableViewController: UITableViewController {
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
-    }
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        return .default
+//    }
     
     let VISION_API_KEY = "4ef2b4c252cbaa92235bd7724d15a9962f59cf85"
     
@@ -101,7 +101,6 @@ class ClassifiersTableViewController: UITableViewController {
                         }
 
                         classifiers = classifiers.sorted(by: { $0.created > $1.created })
-//                        classifiers.append(contentsOf: Classifier.defaults)
 
                         // Instead of blindly reloading the entire list, we should reload/insert/remove row.
                         var indexesToAdd = [IndexPath]()
@@ -161,6 +160,10 @@ class ClassifiersTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if #available(iOS 11.0, *) {
+            self.navigationController?.navigationBar.prefersLargeTitles = true
+        }
+        
         let fetchRequest:NSFetchRequest<PendingClassifier> = PendingClassifier.fetchRequest()
 
         do {
@@ -187,37 +190,6 @@ class ClassifiersTableViewController: UITableViewController {
         
         tableView.estimatedRowHeight = 85.0
         tableView.rowHeight = UITableViewAutomaticDimension
-        
-        
-//        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-//
-//        do {
-//            // Get the directory contents urls (including subfolders urls)
-//            let directoryContents = try FileManager.default.contentsOfDirectory(at: documentsUrl, includingPropertiesForKeys: nil, options: [])
-//
-//            let files = directoryContents.map{ $0.pathComponents.last! }
-//
-//            print(files)
-//
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-        
-//        let fetchRequest:NSFetchRequest<PendingClassifier> = PendingClassifier.fetchRequest()
-//
-//        do {
-//            let searchResults = try DatabaseController.getContext().fetch(fetchRequest)
-//            pending = []
-//            for result in searchResults as [PendingClassifier] {
-//                pending.append(result)
-//            }
-//
-//            let epoch = Date().addingTimeInterval(0 - Date().timeIntervalSince1970)
-//            pending = pending.sorted(by: { $0.created ?? epoch > $1.created ?? epoch })
-//        }
-//        catch {
-//            print("Error: \(error)")
-//        }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -312,27 +284,8 @@ class ClassifiersTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if !(tableView.numberOfSections > 1 && indexPath.section == 0) {
-//            let classifierData = classifiers[indexPath.item]
-//            if classifierData.status == .ready && !(classifierData.classifierId == String() && classifierData.name == "Loading...") {
-//                if classifierData.classifierId == String() {
-//                    UserDefaults.standard.set(classifiers[indexPath.item].name, forKey: "classifier_id")
-//                } else {
-//                    UserDefaults.standard.set(classifiers[indexPath.item].classifierId, forKey: "classifier_id")
-//                }
-//            }
-//        }
-//        tableView.reloadData()
-//        let pendingClassifierClassName: String = String(describing: PendingClassifier.self)
-//
-//        let pendingClassifier:PendingClassifier = NSEntityDescription.insertNewObject(forEntityName: pendingClassifierClassName, into: DatabaseController.getContext()) as! PendingClassifier
-//        pendingClassifier.id = UUID().uuidString
-//        pendingClassifier.name = "Untitled Classifier"
-//        pendingClassifier.created = Date()
-//
         self.pendingClassifier = pending[indexPath.row]
         
-//        DatabaseController.saveContext()
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "newClassifier", sender: nil)
         }
