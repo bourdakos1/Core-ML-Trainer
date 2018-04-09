@@ -439,6 +439,9 @@
                                         <color key="value" red="0.47058823529999999" green="0.38823529410000002" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="train" destination="NFc-Jy-oed" eventType="touchUpInside" id="wi6-e9-6i7"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="train_send.png" translatesAutoresizingMaskIntoConstraints="NO" id="FSP-Jl-T6D">
                                 <rect key="frame" x="176" y="497" width="22" height="22"/>
@@ -499,9 +502,11 @@
                         <outlet property="blackBackground" destination="Fuo-Lg-toa" id="TLe-yw-fU3"/>
                         <outlet property="classifierName" destination="Fg8-Ed-1ju" id="ozl-Xh-Smz"/>
                         <segue destination="zjM-K8-kVZ" kind="presentation" identifier="showSnapper" id="gKb-JU-ebP"/>
+                        <segue destination="2OQ-W3-4iC" kind="unwind" identifier="toClassifierFromClasses" unwindAction="unwindToClassifiersWithSegue:" id="10C-Xi-AMV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4xy-m9-2Eh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="2OQ-W3-4iC" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2257" y="-32"/>
         </scene>
@@ -544,7 +549,7 @@
                                                 </label>
                                             </subviews>
                                         </stackView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ewd-mU-s10">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ewd-mU-s10">
                                             <rect key="frame" x="0.0" y="0.0" width="170" height="170"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="ewd-mU-s10" secondAttribute="height" multiplier="1:1" id="O4a-1R-fLl"/>
@@ -709,7 +714,7 @@
                                     <navigationItem id="ZGo-of-LqE">
                                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="gho-7m-HFz">
                                             <connections>
-                                                <segue destination="hUd-qC-pyW" kind="unwind" unwindAction="unwindToClassifiersWithSegue:" id="PbG-xM-nsD"/>
+                                                <segue destination="hUd-qC-pyW" kind="unwind" identifier="unwindToClassifiersFromTrain" unwindAction="unwindToClassifiersWithSegue:" id="PbG-xM-nsD"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>

@@ -13,7 +13,6 @@ import Alamofire
 
 public class PendingClassifier: NSManagedObject {
     func train(completion: @escaping (_ results: Any) -> Void) {
-        print("train")
         do {
             let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(id!)
             
@@ -34,14 +33,21 @@ public class PendingClassifier: NSManagedObject {
                         if FileManager.default.fileExists(atPath: destination.path) {
                             print("still exists")
                         }
+                        completion("FAILUREEEEE")
+                        return
                     }
                 }
                 
                 // Make sure it's actually gone...
                 if !FileManager.default.fileExists(atPath: destination.path) {
-                    try Zip.zipFiles(paths: [documentsUrl.appendingPathComponent(result.id!)], zipFilePath: destination, password: nil, progress: { progress in
-                        print("Zipping: \(progress)")
-                    })
+                    do {
+                        try Zip.zipFiles(paths: [documentsUrl.appendingPathComponent(result.id!)], zipFilePath: destination, password: nil, progress: { progress in
+                            print("Zipping: \(progress)")
+                        })
+                    } catch {
+                        completion("FAILUREEEEE")
+                        return
+                    }
                 }
             }
             
@@ -49,8 +55,13 @@ public class PendingClassifier: NSManagedObject {
             
             let urlRequest = URLRequest(url: url)
             
+            guard let path = Bundle.main.path(forResource: "Keys", ofType: "plist") else {
+                completion("FAILUREEEEE")
+                return
+            }
+            
             let parameters: Parameters = [
-                "api_key": UserDefaults.standard.string(forKey: "api_key")!,
+                "api_key": (NSDictionary(contentsOfFile: path)?["API_KEY"] as? String)!,
                 "version": "2016-05-20",
                 ]
             
@@ -71,6 +82,15 @@ public class PendingClassifier: NSManagedObject {
                     switch encodingResult {
                     case .success(let upload, _, _):
                         upload.responseJSON { response in
+                            debugPrint(response)
+                            
+                            if let response = response.response {
+                                if !(200..<300 ~= response.statusCode) {
+                                    completion("FAILUREEEEE")
+                                    return
+                                }
+                            }
+                            
                             let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
                             
                             let path = documentsUrl.appendingPathComponent(self.id!)
@@ -92,7 +112,6 @@ public class PendingClassifier: NSManagedObject {
                                 }
                             }
                             completion(response)
-                            debugPrint(response)
                         }
                         upload.uploadProgress(closure: { //Get Progress
                             progress in
@@ -100,6 +119,7 @@ public class PendingClassifier: NSManagedObject {
                         })
                     case .failure(let encodingError):
                         print(encodingError)
+                        completion("FAILUREEEEE")
                     }
             })
         }

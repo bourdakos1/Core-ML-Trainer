@@ -11,11 +11,12 @@ import CoreData
 import Alamofire
 
 class ClassifiersTableViewController: UITableViewController {
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        return .default
-//    }
-    
-    let VISION_API_KEY = "4ef2b4c252cbaa92235bd7724d15a9962f59cf85"
+    let VISION_API_KEY: String = {
+        if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
+            return (NSDictionary(contentsOfFile: path)?["API_KEY"] as? String)!
+        }
+        return ""
+    }()
     
     var pending = [PendingClassifier]()
     var classifiers = [Classifier]()
