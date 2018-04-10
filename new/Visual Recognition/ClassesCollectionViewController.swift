@@ -65,6 +65,8 @@ class ClassesCollectionViewController: UICollectionViewController {
                 cell.classImageImageView.backgroundColor = UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
                 cell.classImageImageView.image = nil
             }
+            
+            cell.remove.isHidden = !isEditing
 
             cell.classImageImageView.layer.cornerRadius = 5
             cell.classImageImageView.clipsToBounds = true
@@ -113,6 +115,11 @@ class ClassesCollectionViewController: UICollectionViewController {
         return ClassObj(pendingClass: pendingClass, image: UIImage(), imageCount: 0)
     }
     
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        reloadData()
+    }
+        
     @IBAction func createClass() {
         let classNames = self.classes.map{ $0.pendingClass.name! }
 

@@ -12,4 +12,9 @@ class ClassCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var classNameLabel: UILabel!
     @IBOutlet weak var classImageCountLabel: UILabel!
     @IBOutlet weak var classImageImageView: UIImageView!
+    @IBOutlet weak var remove: UIButton! {
+        didSet {
+            remove.isHidden = true
+        }
+    }
 }

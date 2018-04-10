@@ -23,6 +23,8 @@ class ClassesViewController: UIViewController, UICollectionViewDelegateFlowLayou
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.rightBarButtonItem = editButtonItem
+        
         blackBackground.isHidden = true
 
         classifierName.layer.shadowColor = UIColor.black.cgColor
@@ -54,7 +56,7 @@ class ClassesViewController: UIViewController, UICollectionViewDelegateFlowLayou
         }
         lastContentOffset = scrollView.contentOffset.y
     }
-    
+        
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.frame.width - 40) / 2 - 10
         
@@ -135,11 +137,19 @@ class ClassesViewController: UIViewController, UICollectionViewDelegateFlowLayou
         // Unwind
     }
     
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        destiny?.setEditing(editing, animated: animated)
+    }
+    
+    weak var destiny: ClassesCollectionViewController?
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedClasses",
             let destination = segue.destination as? ClassesCollectionViewController {
             destination.classifier = classifier
             destination.collectionView?.delegate = self
+            destiny = destination
         }
     }
     

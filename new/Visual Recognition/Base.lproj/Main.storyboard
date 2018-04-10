@@ -523,7 +523,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="classCell" id="QbD-iT-xcu" customClass="ClassCollectionViewCell" customModule="Visual_Recognition" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="classCell" id="QbD-iT-xcu" customClass="ClassCollectionViewCell" customModule="Visual_Recognition" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="170" height="276"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -553,6 +553,10 @@
                                                 <constraint firstAttribute="width" secondItem="ewd-mU-s10" secondAttribute="height" multiplier="1:1" id="O4a-1R-fLl"/>
                                             </constraints>
                                         </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Y7-xD-5B5">
+                                            <rect key="frame" x="-12" y="-12" width="28" height="28"/>
+                                            <state key="normal" image="remove"/>
+                                        </button>
                                     </subviews>
                                 </view>
                                 <constraints>
@@ -560,13 +564,16 @@
                                     <constraint firstItem="kNe-zb-SuY" firstAttribute="leading" secondItem="QbD-iT-xcu" secondAttribute="leading" id="BXX-iK-izQ"/>
                                     <constraint firstItem="ewd-mU-s10" firstAttribute="leading" secondItem="QbD-iT-xcu" secondAttribute="leading" id="EA4-54-p4Q"/>
                                     <constraint firstAttribute="trailing" secondItem="ewd-mU-s10" secondAttribute="trailing" id="OnB-xL-c8M"/>
+                                    <constraint firstItem="8Y7-xD-5B5" firstAttribute="leading" secondItem="QbD-iT-xcu" secondAttribute="leadingMargin" constant="-20" id="XSQ-ds-9qp"/>
                                     <constraint firstItem="ewd-mU-s10" firstAttribute="top" secondItem="QbD-iT-xcu" secondAttribute="top" id="Y6x-Ug-LNn"/>
+                                    <constraint firstItem="8Y7-xD-5B5" firstAttribute="top" secondItem="QbD-iT-xcu" secondAttribute="topMargin" constant="-20" id="ca6-te-Wfe"/>
                                 </constraints>
                                 <size key="customSize" width="170" height="276"/>
                                 <connections>
                                     <outlet property="classImageCountLabel" destination="TDe-29-gJn" id="TAF-6M-x1p"/>
                                     <outlet property="classImageImageView" destination="ewd-mU-s10" id="Ewg-Sx-hGC"/>
                                     <outlet property="classNameLabel" destination="F4w-cW-EuF" id="wk2-q4-RGg"/>
+                                    <outlet property="remove" destination="8Y7-xD-5B5" id="k1V-sW-1RZ"/>
                                     <segue destination="ItP-jq-FQp" kind="presentation" identifier="showSnapper" id="Ae4-wl-cQp"/>
                                 </connections>
                             </collectionViewCell>
@@ -935,6 +942,7 @@
         <image name="checkmark.png" width="60" height="60"/>
         <image name="create.png" width="90" height="90"/>
         <image name="next.png" width="248" height="131"/>
+        <image name="remove" width="28" height="28"/>
         <image name="reverse_solid.png" width="165" height="165"/>
         <image name="scrim.png" width="41" height="133"/>
         <image name="scrim_white.png" width="66" height="66"/>
