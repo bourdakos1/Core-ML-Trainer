@@ -14,10 +14,11 @@ class ClassifierTableViewCell: UITableViewCell {
     @IBOutlet weak var leftPadding: NSLayoutConstraint!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var status: Classifier.Status = Classifier.Status.ready {
+    var status: Classifier.Status = .ready {
         didSet {
             switch status {
             case .ready:
+                accessoryType = .disclosureIndicator
                 leftPadding.constant = 0
                 classifierStatusEmoji?.text = ""
                 classifierNameLabel?.alpha = 1.0
@@ -25,6 +26,7 @@ class ClassifierTableViewCell: UITableViewCell {
                 activityIndicator?.stopAnimating()
                 activityIndicator?.isHidden = true
             case .training, .retraining:
+                accessoryType = .none
                 leftPadding.constant = 48
                 activityIndicator.layoutIfNeeded()
                 classifierNameLabel?.alpha = 0.4
@@ -34,6 +36,7 @@ class ClassifierTableViewCell: UITableViewCell {
                 classifierStatusEmoji?.text = "😴"
                 classifierIdLabel?.text = status.rawValue
             case .failed:
+                accessoryType = .none
                 leftPadding.constant = 0
                 classifierNameLabel?.alpha = 0.4
                 classifierIdLabel?.alpha = 0.4
