@@ -314,21 +314,7 @@ class ClassifiersTableViewController: UITableViewController {
                     }
                 }
             } else {
-                let url = URL(string: "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classifiers/\(classifiers[indexPath.item].classifierId)")!
-                
-                let parameters: Parameters = [
-                    "api_key": API_KEY,
-                    "version": "2016-05-20",
-                    ]
-                
-                Alamofire.request(url, method: .delete, parameters: parameters).responseData { response in
-                    switch response.result {
-                    case .success:
-                        break
-                    case .failure(let error):
-                        print(error)
-                    }
-                }
+                classifiers[indexPath.item].delete()
                 
                 // Don't worry about deleting these right away.
                 classifiers.remove(at: indexPath.item)

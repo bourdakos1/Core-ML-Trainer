@@ -14,6 +14,8 @@ struct Classifier {
         case ready, training, retraining, failed
     }
     
+    static let BASE_URL = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classifiers"
+    
     let name: String
     let classes: [String]
     let classifierId: String
@@ -23,6 +25,7 @@ struct Classifier {
 }
 
 extension Classifier {
+
     init(name: String) {
         self.name = name
         self.classes = [String]()
@@ -68,6 +71,32 @@ extension Classifier {
         self.explanation = explanation
     }
     
+    func delete() {
+        guard let path = Bundle.main.path(forResource: "Keys", ofType: "plist") else {
+            return
+        }
+        
+        guard let apiKey = NSDictionary(contentsOfFile: path)?["API_KEY"] else {
+            return
+        }
+        
+        let url = "\(Classifier.BASE_URL)\(classifierId)"
+        
+        let params: Parameters = [
+            "api_key": apiKey,
+            "version": "2016-05-20",
+            ]
+        
+        Alamofire.request(url, method: .delete, parameters: params).responseData { response in
+            switch response.result {
+            case .success:
+                break
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     static func buildList(completion: @escaping (_ results: [Classifier]) -> Void, error: @escaping () -> Void) {
         guard let path = Bundle.main.path(forResource: "Keys", ofType: "plist") else {
             error()
@@ -79,14 +108,13 @@ extension Classifier {
             return
         }
         
-        let url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classifiers"
         let params = [
             "api_key": apiKey,
             "version": "2016-05-20",
             "verbose": "true"
         ]
         
-        Alamofire.request(url, parameters: params).validate().responseJSON { response in
+        Alamofire.request(BASE_URL, parameters: params).validate().responseJSON { response in
             switch response.result {
             case .success:
                 guard let json = response.result.value as? [String : Any] else {

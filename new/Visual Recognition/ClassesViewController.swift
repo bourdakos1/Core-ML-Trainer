@@ -32,7 +32,6 @@ class ClassesViewController: UIViewController, UICollectionViewDelegateFlowLayou
         classifierName.layer.shadowRadius = 2
         classifierName.layer.shadowOffset = CGSize(width: 0, height: 0)
 
-//         Stop being lazy self...
         if classifier.name != "Untitled Model" {
             classifierName.text = classifier.name
         }
