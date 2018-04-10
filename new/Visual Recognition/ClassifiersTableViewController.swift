@@ -21,44 +21,6 @@ class ClassifiersTableViewController: UITableViewController {
     var pending = [PendingClassifier]()
     var classifiers = [Classifier]()
     
-    var pendingClassifier = PendingClassifier()
-    var pendingClass = PendingClass()
-    
-    weak var AddAlertSaveAction: UIAlertAction?
-    
-    @IBAction func createClassifier() {
-        let pendingClassifierClassName:String = String(describing: PendingClassifier.self)
-        
-        let pendingClassifier:PendingClassifier = NSEntityDescription.insertNewObject(forEntityName: pendingClassifierClassName, into: DatabaseController.getContext()) as! PendingClassifier
-        pendingClassifier.id = UUID().uuidString
-        pendingClassifier.name = "Untitled Model"
-        pendingClassifier.created = Date()
-        
-        // Create a new class thats blank
-        let pendingClassClassName: String = String(describing: PendingClass.self)
-        
-        let pendingClass: PendingClass = NSEntityDescription.insertNewObject(forEntityName: pendingClassClassName, into: DatabaseController.getContext()) as! PendingClass
-        
-        pendingClass.id = UUID().uuidString
-        pendingClass.name = String()
-        pendingClass.created = Date()
-        
-        pendingClassifier.addToRelationship(pendingClass)
-        
-        self.pendingClassifier = pendingClassifier
-        self.pendingClass = pendingClass
-        
-        DatabaseController.saveContext()
-        
-        self.performSegue(withIdentifier: "showSnapperFromScratch", sender: nil)
-    }
-    
-//    WHAT THE FUCK DOES THIS DO? I DON'T REMEMBER WRITING THIS...
-    func handleTextDidChange(_ sender:UITextField) {
-        // Enforce a minimum length of >= 1 for secure text alerts.
-        AddAlertSaveAction!.isEnabled = (sender.text?.utf16.count)! >= 1
-    }
-    
     var isLoading = false
     func loadClassifiers() {
         print("prepare to load")
@@ -251,7 +213,7 @@ class ClassifiersTableViewController: UITableViewController {
             
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell2", for: indexPath) as! ClassiferTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell2", for: indexPath) as! ClassifierTableViewCell
             
             let classifierData = classifiers[indexPath.item]
             
@@ -297,14 +259,6 @@ class ClassifiersTableViewController: UITableViewController {
             cell.checkmark?.isHidden = true
             
             return cell
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.pendingClassifier = pending[indexPath.row]
-        
-        DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "newClassifier", sender: nil)
         }
     }
     
@@ -427,15 +381,56 @@ class ClassifiersTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "newClassifier",
-            let destination = segue.destination as? ClassesViewController {
-            destination.classifier = pendingClassifier
-        }
+        super.prepare(for: segue, sender: sender)
         
-        if  segue.identifier == "showSnapperFromScratch",
-            let destination = segue.destination as? SnapperViewController {
+        switch(segue.identifier ?? "") {
+            
+        case "showSnapperFromScratch":
+            guard let destination = segue.destination as? SnapperViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            
+            let pendingClassifierClassName:String = String(describing: PendingClassifier.self)
+            
+            let pendingClassifier:PendingClassifier = NSEntityDescription.insertNewObject(forEntityName: pendingClassifierClassName, into: DatabaseController.getContext()) as! PendingClassifier
+            pendingClassifier.id = UUID().uuidString
+            pendingClassifier.name = "Untitled Model"
+            pendingClassifier.created = Date()
+            
+            // Create a new class thats blank
+            let pendingClassClassName: String = String(describing: PendingClass.self)
+            
+            let pendingClass: PendingClass = NSEntityDescription.insertNewObject(forEntityName: pendingClassClassName, into: DatabaseController.getContext()) as! PendingClass
+            
+            pendingClass.id = UUID().uuidString
+            pendingClass.name = String()
+            pendingClass.created = Date()
+            
+            pendingClassifier.addToRelationship(pendingClass)
+            
+            DatabaseController.saveContext()
+            
             destination.pendingClass = pendingClass
             destination.classifier = pendingClassifier
+            
+        case "draftedClassifier":
+            guard let destination = segue.destination as? ClassesViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            
+            guard let selectedCell = sender as? UITableViewCell else {
+                fatalError("Unexpected sender: \(String(describing: sender))")
+            }
+            
+            guard let indexPath = tableView.indexPath(for: selectedCell) else {
+                fatalError("The selected cell is not being displayed by the table")
+            }
+            
+            let selectedItem = pending[indexPath.row]
+            destination.classifier = selectedItem
+            
+        default:
+            fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
         }
     }
 }

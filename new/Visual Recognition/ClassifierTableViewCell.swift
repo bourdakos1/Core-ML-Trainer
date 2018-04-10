@@ -7,7 +7,7 @@
 //
 
 import UIKit
-class ClassiferTableViewCell: UITableViewCell {
+class ClassifierTableViewCell: UITableViewCell {
     @IBOutlet weak var classifierNameLabel: UILabel!
     @IBOutlet weak var classifierIdLabel: UILabel!
     @IBOutlet weak var classifierStatusEmoji: UILabel!

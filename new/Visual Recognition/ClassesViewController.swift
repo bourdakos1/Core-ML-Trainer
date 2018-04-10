@@ -112,7 +112,12 @@ class ClassesViewController: UIViewController, UICollectionViewDelegateFlowLayou
     }
     
     func keyboardWillHide(notification: NSNotification) {
-        classifier.name = classifierName.text
+        if let text = classifierName.text, text.isEmpty {
+            classifier.name = "Untitled Model"
+        } else if let text = classifierName.text {
+            classifier.name = text
+        }
+        
         DatabaseController.saveContext()
 
         if lastContentOffset <= 0 {
