@@ -141,4 +141,30 @@ class ClassesCollectionViewController: UICollectionViewController {
 
         DatabaseController.saveContext()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        switch(segue.identifier ?? "") {
+        case "showSnapper":
+            guard let destination = segue.destination as? AdditionalSnapperViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            
+            guard let selectedCell = sender as? ClassCollectionViewCell else {
+                fatalError("Unexpected sender: \(String(describing: sender))")
+            }
+            
+            guard let indexPath = collectionView?.indexPath(for: selectedCell) else {
+                fatalError("The selected cell is not being displayed by the table")
+            }
+            
+            let selectedItem = classes[indexPath.row]
+            destination.pendingClass = selectedItem.pendingClass
+            destination.classifier = classifier
+            
+        default:
+            fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
+        }
+    }
 }

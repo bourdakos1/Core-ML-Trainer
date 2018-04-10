@@ -131,6 +131,10 @@ class ClassesViewController: UIViewController, UICollectionViewDelegateFlowLayou
         })
     }
     
+    @IBAction func unwindToClasses(segue: UIStoryboardSegue) {
+        // Unwind
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedClasses",
             let destination = segue.destination as? ClassesCollectionViewController {

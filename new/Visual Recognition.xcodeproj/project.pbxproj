@@ -32,6 +32,7 @@
 		236273591F10B03E0090F4F5 /* photos.png in Resources */ = {isa = PBXBuildFile; fileRef = 236273561F10B0290090F4F5 /* photos.png */; };
 		2362735B1F10B80E0090F4F5 /* train.png in Resources */ = {isa = PBXBuildFile; fileRef = 2362735A1F10B7C60090F4F5 /* train.png */; };
 		2362735F1F122EE60090F4F5 /* reverse.png in Resources */ = {isa = PBXBuildFile; fileRef = 2362735E1F122E660090F4F5 /* reverse.png */; };
+		23666E34207C71FA0030033C /* AdditionalSnapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23666E33207C71FA0030033C /* AdditionalSnapperViewController.swift */; };
 		236DCB6B1E7DAA54009AE6D6 /* capture.png in Resources */ = {isa = PBXBuildFile; fileRef = 236DCB6A1E7DAA54009AE6D6 /* capture.png */; };
 		236DCB6D1E7DAE04009AE6D6 /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 236DCB6C1E7DAE04009AE6D6 /* cancel.png */; };
 		23742B5E1F1D296E00F52C1B /* Classifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23742B5D1F1D296E00F52C1B /* Classifier.swift */; };
@@ -105,6 +106,7 @@
 		236273571F10B0290090F4F5 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		2362735A1F10B7C60090F4F5 /* train.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = train.png; sourceTree = "<group>"; };
 		2362735E1F122E660090F4F5 /* reverse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reverse.png; sourceTree = "<group>"; };
+		23666E33207C71FA0030033C /* AdditionalSnapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalSnapperViewController.swift; sourceTree = "<group>"; };
 		236DCB6A1E7DAA54009AE6D6 /* capture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = capture.png; sourceTree = "<group>"; };
 		236DCB6C1E7DAE04009AE6D6 /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
 		23742B5D1F1D296E00F52C1B /* Classifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Classifier.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				23369D6D1F2BF9DB00033907 /* ClassesCollectionViewController.swift */,
 				23369D6E1F2BF9DB00033907 /* ClassCollectionViewCell.swift */,
 				2352A3071F194DDE00458F1F /* SnapperViewController.swift */,
+				23666E33207C71FA0030033C /* AdditionalSnapperViewController.swift */,
 				23C875281F25469400C3BBE8 /* NameClassViewController.swift */,
 				23C875261F2544D300C3BBE8 /* ThumbCollectionViewController.swift */,
 				23AB6DD31F26832300632FDE /* TrainViewController.swift */,
@@ -651,6 +654,7 @@
 				233D0BB71EC22EB6005E5594 /* PendingClassifier+CoreDataProperties.swift in Sources */,
 				23AB6DD41F26832300632FDE /* TrainViewController.swift in Sources */,
 				23C875271F2544D300C3BBE8 /* ThumbCollectionViewController.swift in Sources */,
+				23666E34207C71FA0030033C /* AdditionalSnapperViewController.swift in Sources */,
 				23C875291F25469400C3BBE8 /* NameClassViewController.swift in Sources */,
 				233D0BB61EC22EB6005E5594 /* PendingClassifier+CoreDataClass.swift in Sources */,
 			);
