@@ -23,101 +23,73 @@ class ClassifiersTableViewController: UITableViewController {
     
     var isLoading = false
     func loadClassifiers() {
-        print("prepare to load")
-        // Load from Watson
-
-        if API_KEY == "" {
-            classifiers = []
-            // This should be okay.
-            tableView.reloadData()
-            refreshControl?.endRefreshing()
-            return
-        }
-
-        let url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classifiers"
-        let params = [
-            "api_key": API_KEY,
-            "version": "2016-05-20",
-            "verbose": "true"
-        ]
         if isLoading {
             return
         }
         print("loading from server")
         isLoading = true
-        Alamofire.request(url, parameters: params).validate().responseJSON { [weak self] response in
+        Classifier.buildList(completion: { [weak self] classifiers in
             guard let `self` = self else { return }
+            
+            let numberOfSections = self.calculateNumberOfSections(self.pending, classifiers)
+            
+            // Instead of blindly reloading the entire list, we should reload/insert/remove row.
+            var indexesToAdd = [IndexPath]()
+            for classifier in classifiers {
+                if !self.classifiers.contains(where: { $0.isEqual(classifier) }) {
+                    print("inserting row \(indexesToAdd.count): \(classifier.name)")
+                    indexesToAdd.append(IndexPath(row: indexesToAdd.count, section: numberOfSections - 1))
+                }
+            }
+            
+            var indexesToDelete = [IndexPath]()
+            for classifier in self.classifiers {
+                if !classifiers.contains(where: { $0.isEqual(classifier)}) {
+                    let itemToDelete = self.classifiers.index(where: {$0.classifierId == classifier.classifierId})!
+                    print("removing row \(itemToDelete): \(classifier.name)")
+                    indexesToDelete.append(IndexPath(row: itemToDelete, section: numberOfSections - 1))
+                }
+            }
+            
+            var indexesToUpdate = [IndexPath]()
+            for classifier in self.classifiers {
+                // If the new classifier matches one of the old classifiers, but the status is different.
+                if classifiers.contains(where: { $0.isEqual(classifier) && $0.status != classifier.status}) {
+                    let itemToUpdate = self.classifiers.index(where: {$0.classifierId == classifier.classifierId})!
+                    print("reloading row \(itemToUpdate): \(classifier.name)")
+                    indexesToUpdate.append(IndexPath(row: itemToUpdate, section: numberOfSections - 1))
+                }
+            }
+            
+            self.classifiers = classifiers
+            self.tableView.beginUpdates()
+            self.tableView.insertRows(at: indexesToAdd, with: .automatic)
+            self.tableView.deleteRows(at: indexesToDelete, with: .automatic)
+            self.tableView.reloadRows(at: indexesToUpdate, with: .automatic)
+            if numberOfSections > self.tableView.numberOfSections {
+                self.tableView.insertSections([numberOfSections - 1], with: .automatic)
+            } else if numberOfSections < self.tableView.numberOfSections {
+                self.tableView.deleteSections([self.tableView.numberOfSections - 1], with: .automatic)
+            }
+            self.tableView.endUpdates()
+            
             self.isLoading = false
             print("done")
             self.refreshControl?.endRefreshing()
-            switch response.result {
-            case .success:
-                if let json = response.result.value as? [String : Any] {
-                    if let classifiersJSON = json["classifiers"] as? [Any] {
-
-                        // Build classifiers from json.
-                        var classifiers = [Classifier]()
-                        for classifierJSON in classifiersJSON {
-                            let classifier = Classifier(json: classifierJSON)!
-                            classifiers.append(classifier)
-                        }
-
-                        classifiers = classifiers.sorted(by: { $0.created > $1.created })
-                        
-                        let numberOfSections = self.calculateNumberOfSections(self.pending, classifiers)
-
-                        // Instead of blindly reloading the entire list, we should reload/insert/remove row.
-                        var indexesToAdd = [IndexPath]()
-                        for classifier in classifiers {
-                            if !self.classifiers.contains(where: { $0.isEqual(classifier) }) {
-                                print("inserting row \(indexesToAdd.count): \(classifier.name)")
-                                indexesToAdd.append(IndexPath(row: indexesToAdd.count, section: numberOfSections - 1))
-                            }
-                        }
-
-                        var indexesToDelete = [IndexPath]()
-                        for classifier in self.classifiers {
-                            if !classifiers.contains(where: { $0.isEqual(classifier)}) {
-                                let itemToDelete = self.classifiers.index(where: {$0.classifierId == classifier.classifierId})!
-                                print("removing row \(itemToDelete): \(classifier.name)")
-                                indexesToDelete.append(IndexPath(row: itemToDelete, section: numberOfSections - 1))
-                            }
-                        }
-
-                        var indexesToUpdate = [IndexPath]()
-                        for classifier in self.classifiers {
-                            // If the new classifier matches one of the old classifiers, but the status is different.
-                            if classifiers.contains(where: { $0.isEqual(classifier) && $0.status != classifier.status}) {
-                                let itemToUpdate = self.classifiers.index(where: {$0.classifierId == classifier.classifierId})!
-                                print("reloading row \(itemToUpdate): \(classifier.name)")
-                                indexesToUpdate.append(IndexPath(row: itemToUpdate, section: numberOfSections - 1))
-                            }
-                        }
-
-                        self.classifiers = classifiers
-                        self.tableView.beginUpdates()
-                        self.tableView.insertRows(at: indexesToAdd, with: .automatic)
-                        self.tableView.deleteRows(at: indexesToDelete, with: .automatic)
-                        self.tableView.reloadRows(at: indexesToUpdate, with: .automatic)
-                        if numberOfSections > self.tableView.numberOfSections {
-                            self.tableView.insertSections([numberOfSections - 1], with: .automatic)
-                        } else if numberOfSections < self.tableView.numberOfSections {
-                            self.tableView.deleteSections([self.tableView.numberOfSections - 1], with: .automatic)
-                        }
-                        self.tableView.endUpdates()
-
-                        // After we update our table, check if anything is still training.
-                        let training = self.classifiers.filter({ $0.status == .training || $0.status == .training })
-                        if training.count > 0 {
-                            // If things are still training recheck in 4 seconds.
-                            self.reloadClassifiers()
-                        }
-                    }
-                }
-            case .failure(let error):
-                print(error)
+            
+            // After we update our table, check if anything is still training.
+            let training = self.classifiers.filter({ $0.status == .training || $0.status == .training })
+            if training.count > 0 {
+                // If things are still training recheck in 4 seconds.
+                self.reloadClassifiers()
             }
-        }
+            
+            }, error: { [weak self] in
+                guard let `self` = self else { return }
+                self.tableView.reloadData()
+                self.refreshControl?.endRefreshing()
+                return
+        })
     }
 
     func reloadClassifiers() {

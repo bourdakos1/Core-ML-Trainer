@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 struct Classifier {
     enum Status: String {
@@ -65,6 +66,54 @@ extension Classifier {
         self.created = date
         self.status = status
         self.explanation = explanation
+    }
+    
+    static func buildList(completion: @escaping (_ results: [Classifier]) -> Void, error: @escaping () -> Void) {
+        guard let path = Bundle.main.path(forResource: "Keys", ofType: "plist") else {
+            error()
+            return
+        }
+
+        guard let apiKey = NSDictionary(contentsOfFile: path)?["API_KEY"] else {
+            error()
+            return
+        }
+        
+        let url = "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classifiers"
+        let params = [
+            "api_key": apiKey,
+            "version": "2016-05-20",
+            "verbose": "true"
+        ]
+        
+        Alamofire.request(url, parameters: params).validate().responseJSON { response in
+            switch response.result {
+            case .success:
+                guard let json = response.result.value as? [String : Any] else {
+                    error()
+                    return
+                }
+                
+                guard let classifiersJSON = json["classifiers"] as? [Any] else {
+                    error()
+                    return
+                }
+                
+                completion(
+                    classifiersJSON.flatMap { (classifierJSON: Any) -> Classifier? in
+                        guard let classifier = Classifier(json: classifierJSON) else {
+                            error()
+                            return nil
+                        }
+                        return classifier
+                    }.sorted(by: { $0.created > $1.created })
+                )
+                
+            case .failure:
+                error()
+                return
+            }
+        }
     }
     
     func isEqual(_ object: Classifier) -> Bool {
