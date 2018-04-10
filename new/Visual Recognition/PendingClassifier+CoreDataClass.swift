@@ -23,6 +23,7 @@ public class PendingClassifier: NSManagedObject {
                 
                 paths.append(destination)
                 
+                // Delete any old zips before reziping the new images.
                 if FileManager.default.fileExists(atPath: destination.path) {
                     print("Exists, deleting")
                     // Exist so delete first and then try.
@@ -85,7 +86,7 @@ public class PendingClassifier: NSManagedObject {
                             debugPrint(response)
                             
                             if let response = response.response {
-                                if !(200..<300 ~= response.statusCode) {
+                                if !(200 ..< 300 ~= response.statusCode) {
                                     completion("FAILUREEEEE")
                                     return
                                 }
