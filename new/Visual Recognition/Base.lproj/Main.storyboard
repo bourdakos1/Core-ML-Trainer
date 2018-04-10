@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -50,6 +49,9 @@
                                     <subviews>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="RMY-uo-6A4">
                                             <rect key="frame" x="26" y="81" width="20" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="20" id="ZkW-0b-5HI"/>
+                                            </constraints>
                                         </activityIndicatorView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="I5O-og-flQ">
                                             <rect key="frame" x="64" y="21" width="237.5" height="139"/>
@@ -68,24 +70,6 @@
                                                 </label>
                                             </subviews>
                                         </stackView>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Twf-PJ-Baq">
-                                            <rect key="frame" x="332" y="78" width="25" height="25"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="25" id="Gph-1V-lUG"/>
-                                                <constraint firstAttribute="height" constant="25" id="nLB-z7-Bae"/>
-                                            </constraints>
-                                            <state key="normal" backgroundImage="btn_dropdown.png"/>
-                                            <connections>
-                                                <action selector="buttonTapWithSender:" destination="aRv-Bq-Mou" eventType="touchUpInside" id="Ig3-3U-hH1"/>
-                                            </connections>
-                                        </button>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.png" translatesAutoresizingMaskIntoConstraints="NO" id="ipn-TG-eYX">
-                                            <rect key="frame" x="26" y="80" width="20" height="20"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="20" id="I7s-Lj-puc"/>
-                                                <constraint firstAttribute="width" constant="20" id="hhg-Bd-5iF"/>
-                                            </constraints>
-                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dje-Ha-HkY">
                                             <rect key="frame" x="319.5" y="81" width="37.5" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -94,32 +78,23 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="ipn-TG-eYX" firstAttribute="centerY" secondItem="oL8-aV-CTz" secondAttribute="centerY" id="5J5-CJ-JHy"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="I5O-og-flQ" secondAttribute="bottom" constant="10" id="65Y-56-fip"/>
                                         <constraint firstItem="dje-Ha-HkY" firstAttribute="centerY" secondItem="oL8-aV-CTz" secondAttribute="centerY" id="71G-dS-Qwk"/>
                                         <constraint firstAttribute="trailing" secondItem="dje-Ha-HkY" secondAttribute="trailing" constant="18" id="Fv2-HN-yz3"/>
-                                        <constraint firstItem="I5O-og-flQ" firstAttribute="leading" secondItem="RMY-uo-6A4" secondAttribute="trailing" constant="18" id="H4b-Aa-wdb"/>
                                         <constraint firstItem="RMY-uo-6A4" firstAttribute="centerY" secondItem="oL8-aV-CTz" secondAttribute="centerY" id="HTQ-Nl-0ve"/>
                                         <constraint firstItem="RMY-uo-6A4" firstAttribute="leading" secondItem="oL8-aV-CTz" secondAttribute="leadingMargin" constant="10" id="IFf-Es-M0L"/>
-                                        <constraint firstItem="ipn-TG-eYX" firstAttribute="leading" secondItem="oL8-aV-CTz" secondAttribute="leadingMargin" constant="10" id="Qty-9M-8PV"/>
+                                        <constraint firstItem="I5O-og-flQ" firstAttribute="leading" secondItem="oL8-aV-CTz" secondAttribute="leadingMargin" constant="48" id="Pgm-VF-CrP"/>
                                         <constraint firstItem="I5O-og-flQ" firstAttribute="top" secondItem="oL8-aV-CTz" secondAttribute="topMargin" constant="10" id="WcI-XT-tl2"/>
-                                        <constraint firstItem="Twf-PJ-Baq" firstAttribute="centerY" secondItem="oL8-aV-CTz" secondAttribute="centerY" id="bIC-vD-qfq"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Twf-PJ-Baq" secondAttribute="trailing" constant="10" id="eZ1-Ro-oIB"/>
                                         <constraint firstItem="dje-Ha-HkY" firstAttribute="leading" secondItem="I5O-og-flQ" secondAttribute="trailing" constant="18" id="keK-Q8-QBi"/>
                                         <constraint firstItem="I5O-og-flQ" firstAttribute="centerY" secondItem="oL8-aV-CTz" secondAttribute="centerY" id="xdp-dp-jdZ"/>
                                     </constraints>
-                                    <variation key="default">
-                                        <mask key="subviews">
-                                            <exclude reference="Twf-PJ-Baq"/>
-                                        </mask>
-                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="activityIndicator" destination="RMY-uo-6A4" id="h7f-e4-Evm"/>
-                                    <outlet property="checkmark" destination="ipn-TG-eYX" id="3cd-kN-AO8"/>
                                     <outlet property="classifierIdLabel" destination="fX9-Bo-mVQ" id="SAA-Ls-ANu"/>
                                     <outlet property="classifierNameLabel" destination="9uh-Gy-y6k" id="CLe-UX-WWr"/>
                                     <outlet property="classifierStatusEmoji" destination="dje-Ha-HkY" id="fib-mB-yZ9"/>
+                                    <outlet property="leftPadding" destination="Pgm-VF-CrP" id="nrL-YO-fmg"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -939,10 +914,8 @@
     </scenes>
     <resources>
         <image name="bottom_scrim_white.png" width="66" height="65"/>
-        <image name="btn_dropdown.png" width="76" height="76"/>
         <image name="cancel.png" width="100" height="100"/>
         <image name="capture.png" width="232" height="232"/>
-        <image name="checkmark.png" width="60" height="60"/>
         <image name="create.png" width="90" height="90"/>
         <image name="next.png" width="248" height="131"/>
         <image name="remove" width="28" height="28"/>

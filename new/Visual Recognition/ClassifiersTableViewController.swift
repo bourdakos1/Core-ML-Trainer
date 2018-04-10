@@ -26,7 +26,7 @@ class ClassifiersTableViewController: UITableViewController {
         if isLoading {
             return
         }
-        print("loading from server")
+        
         isLoading = true
         Classifier.buildList(completion: { [weak self] classifiers in
             guard let `self` = self else { return }
@@ -74,7 +74,6 @@ class ClassifiersTableViewController: UITableViewController {
             self.tableView.endUpdates()
             
             self.isLoading = false
-            print("done")
             self.refreshControl?.endRefreshing()
             
             // After we update our table, check if anything is still training.
@@ -191,45 +190,8 @@ class ClassifiersTableViewController: UITableViewController {
             
             cell.classifierNameLabel?.text = classifierData.name
             cell.classifierIdLabel?.text = classifierData.classifierId
-            
-            switch classifierData.status {
-            case .ready:
-                cell.classifierStatusEmoji?.text = ""
-            case .training, .retraining:
-                cell.classifierStatusEmoji?.text = "😴"
-                cell.classifierIdLabel?.text = classifierData.status.rawValue
-            case .failed:
-                cell.classifierStatusEmoji?.text = "😭"
-                cell.classifierIdLabel?.text = "Verify there are at least 10 images per class."
-            }
-            
-            if classifierData.status == .ready {
-                cell.classifierNameLabel?.alpha = 1.0
-                cell.classifierIdLabel?.alpha = 1.0
-                cell.activityIndicator?.stopAnimating()
-                cell.activityIndicator?.isHidden = true
-            } else if classifierData.status == .training || classifierData.status == .retraining {
-                cell.classifierNameLabel?.alpha = 0.4
-                cell.classifierIdLabel?.alpha = 0.4
-                cell.activityIndicator?.startAnimating()
-                cell.activityIndicator?.isHidden = false
-            } else {
-                cell.classifierNameLabel?.alpha = 0.4
-                cell.classifierIdLabel?.alpha = 0.4
-                cell.activityIndicator?.stopAnimating()
-                cell.activityIndicator?.isHidden = true
-            }
-            
-            if classifierData.classifierId == String() && classifierData.name == "Loading..." {
-                cell.activityIndicator?.startAnimating()
-                cell.activityIndicator?.isHidden = false
-                
-                cell.classifierNameLabel?.text = String()
-                cell.classifierIdLabel?.text = "Loading..."
-            }
-            
-            cell.checkmark?.isHidden = true
-            
+            cell.status = classifierData.status
+                        
             return cell
         }
     }

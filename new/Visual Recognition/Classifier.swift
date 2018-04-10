@@ -80,8 +80,8 @@ extension Classifier {
             return
         }
         
-        let url = "\(Classifier.BASE_URL)\(classifierId)"
-        
+        let url = "\(Classifier.BASE_URL)/\(classifierId)"
+    
         let params: Parameters = [
             "api_key": apiKey,
             "version": "2016-05-20",
