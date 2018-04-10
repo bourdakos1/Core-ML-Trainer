@@ -556,6 +556,9 @@
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Y7-xD-5B5">
                                             <rect key="frame" x="-12" y="-12" width="28" height="28"/>
                                             <state key="normal" image="remove"/>
+                                            <connections>
+                                                <action selector="removeWithSender:" destination="QbD-iT-xcu" eventType="touchUpInside" id="GQZ-Dm-NEr"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                 </view>

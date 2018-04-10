@@ -16,8 +16,7 @@ struct ClassObj {
     var imageCount: Int
 }
 
-class ClassesCollectionViewController: UICollectionViewController {
-    
+class ClassesCollectionViewController: UICollectionViewController, ClassCellDelegate {    
     var classifier = PendingClassifier()
     var classes = [ClassObj]()
 
@@ -66,8 +65,10 @@ class ClassesCollectionViewController: UICollectionViewController {
                 cell.classImageImageView.image = nil
             }
             
+            cell.delegate = self
+            
             cell.remove.isHidden = !isEditing
-
+            
             cell.classImageImageView.layer.cornerRadius = 5
             cell.classImageImageView.clipsToBounds = true
 
@@ -119,7 +120,15 @@ class ClassesCollectionViewController: UICollectionViewController {
         super.setEditing(editing, animated: animated)
         reloadData()
     }
-        
+    
+    func remove(cell: ClassCollectionViewCell) {
+        guard let indexpath = collectionView?.indexPath(for: cell) else {
+            return
+        }
+        classes.remove(at: indexpath.item)
+        collectionView?.deleteItems(at: [indexpath])
+    }
+    
     @IBAction func createClass() {
         let classNames = self.classes.map{ $0.pendingClass.name! }
 
@@ -147,6 +156,15 @@ class ClassesCollectionViewController: UICollectionViewController {
         self.insertItem()
 
         DatabaseController.saveContext()
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String?, sender: Any?) -> Bool {
+        switch(identifier ?? "") {
+        case "showSnapper":
+            return !isEditing
+        default:
+            return true
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

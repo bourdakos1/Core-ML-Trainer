@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ClassCellDelegate {
+    func remove(cell: ClassCollectionViewCell)
+}
+
 class ClassCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var classNameLabel: UILabel!
     @IBOutlet weak var classImageCountLabel: UILabel!
@@ -16,5 +20,11 @@ class ClassCollectionViewCell: UICollectionViewCell {
         didSet {
             remove.isHidden = true
         }
+    }
+    
+    var delegate: ClassCellDelegate?
+    
+    @IBAction func remove(sender: UIButton) {
+        delegate?.remove(cell: self)
     }
 }
