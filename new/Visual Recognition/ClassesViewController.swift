@@ -103,6 +103,8 @@ class ClassesViewController: UIViewController, UICollectionViewDelegateFlowLayou
     func keyboardWillShow(notification: NSNotification) {
         blackBackground.alpha = 0
         blackBackground.isHidden = false
+        
+        setEditing(false, animated: true)
 
         if lastContentOffset <= 0 {
             animateShadow(opacity: 0.2, offset: CGSize(width: 0, height: 2))

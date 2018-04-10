@@ -26,8 +26,6 @@ class ClassesCollectionViewController: UICollectionViewController, ClassCellDele
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.toolbar.isHidden = false
-
         classes = []
         for result in classifier.relationship?.allObjects as! [PendingClass] {
             classes.append(grabPhoto(for: result))
@@ -80,6 +78,12 @@ class ClassesCollectionViewController: UICollectionViewController, ClassCellDele
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "newClassCell", for: indexPath)
+            if isEditing {
+                cell.viewWithTag(0)?.alpha = 0.4
+            } else {
+                cell.viewWithTag(0)?.alpha = 1.0
+            }
+            cell.isUserInteractionEnabled = !isEditing
             cell.viewWithTag(1)?.layer.cornerRadius = 5
             cell.viewWithTag(1)?.clipsToBounds = true
             cell.viewWithTag(1)?.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.15).cgColor
