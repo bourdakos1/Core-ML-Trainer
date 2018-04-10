@@ -29,9 +29,12 @@ extension UIImage {
 
 extension UIRefreshControl {
     func beginRefreshingManually() {
+        // This may cause issues with our swanky navigation controller.
         if let scrollView = superview as? UIScrollView {
-            scrollView.setContentOffset(CGPoint(x: 0, y: scrollView.contentOffset.y - frame.height), animated: true)
+            if (scrollView.contentOffset.y == 0) {
+                scrollView.setContentOffset(CGPoint(x: 0, y: -frame.height), animated: true)
+                beginRefreshing()
+            }
         }
-        beginRefreshing()
     }
 }
