@@ -120,6 +120,7 @@ class ClassifiersTableViewController: UITableViewController {
             print("Error: \(error)")
         }
         tableView.reloadData()
+        refreshControl?.beginRefreshingManually()
         loadClassifiers()
     }
     
