@@ -192,6 +192,14 @@ class AdditionalSnapperViewController: CameraViewController {
             print(error.localizedDescription)
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if  segue.identifier == "renameClass",
+            let destination = segue.destination as? NameClassViewController {
+            destination.pendingClass = pendingClass
+            destination.classifier = classifier
+        }
+    }
 }
 
 
