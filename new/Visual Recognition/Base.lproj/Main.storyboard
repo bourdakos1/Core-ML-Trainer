@@ -476,6 +476,8 @@
                     <connections>
                         <outlet property="blackBackground" destination="Fuo-Lg-toa" id="TLe-yw-fU3"/>
                         <outlet property="classifierName" destination="Fg8-Ed-1ju" id="ozl-Xh-Smz"/>
+                        <outlet property="scrimSolid" destination="evb-iT-Gds" id="gEh-Yw-z09"/>
+                        <outlet property="skrimGradient" destination="maY-yM-UMb" id="NEN-1S-oBg"/>
                         <segue destination="2OQ-W3-4iC" kind="unwind" identifier="toClassifierFromClasses" unwindAction="unwindToClassifiersWithSegue:" id="10C-Xi-AMV"/>
                     </connections>
                 </viewController>
@@ -746,12 +748,25 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Model Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NPP-7l-h3Q">
+                                <rect key="frame" x="16" y="84" width="343" height="46"/>
+                                <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="KXF-2y-NMZ"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="hUR-s5-5n6" firstAttribute="leading" secondItem="t3s-uz-e2A" secondAttribute="leading" id="076-et-qzH"/>
+                            <constraint firstItem="NPP-7l-h3Q" firstAttribute="top" secondItem="hUR-s5-5n6" secondAttribute="bottom" constant="20" id="5uh-Ka-mgL"/>
                             <constraint firstAttribute="trailing" secondItem="hUR-s5-5n6" secondAttribute="trailing" id="7zs-X6-Lgd"/>
                             <constraint firstItem="hUR-s5-5n6" firstAttribute="top" secondItem="Rrd-7L-KGP" secondAttribute="bottom" id="Fso-P8-V9G"/>
+                            <constraint firstItem="NPP-7l-h3Q" firstAttribute="leading" secondItem="t3s-uz-e2A" secondAttribute="leadingMargin" id="X89-g9-tB6"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="NPP-7l-h3Q" secondAttribute="trailing" id="a1o-dD-h0O"/>
                             <constraint firstItem="9Yk-l7-Orz" firstAttribute="centerX" secondItem="t3s-uz-e2A" secondAttribute="centerX" id="kAD-xb-j66"/>
                             <constraint firstItem="9Yk-l7-Orz" firstAttribute="centerY" secondItem="t3s-uz-e2A" secondAttribute="centerY" id="y8e-Sy-jSp"/>
                         </constraints>

@@ -11,7 +11,6 @@ import CoreData
 
 
 extension PendingClass {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<PendingClass> {
         return NSFetchRequest<PendingClass>(entityName: "PendingClass")
     }
@@ -19,5 +18,13 @@ extension PendingClass {
     @NSManaged public var name: String?
     @NSManaged public var id: String?
     @NSManaged public var created: Date?
-
+    @NSManaged public var locked: NSNumber?
+    var isLocked: Bool {
+        get {
+            return Bool(locked!)
+        }
+        set {
+            locked = NSNumber(value: newValue)
+        }
+    }
 }

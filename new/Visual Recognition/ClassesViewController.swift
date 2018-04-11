@@ -14,9 +14,16 @@ class ClassesViewController: UIViewController, UICollectionViewDelegateFlowLayou
     @IBOutlet weak var blackBackground: UIView!
     @IBOutlet weak var classifierName: UITextField!
     
+    @IBOutlet weak var scrimSolid: UIView!
+    @IBOutlet weak var skrimGradient: UIImageView!
+    
     override func viewWillAppear(_ animated: Bool) {
         if #available(iOS 11.0, *) {
-            self.navigationController?.navigationBar.prefersLargeTitles = false
+            if classifier.classifierId != nil {
+                 navigationController?.navigationBar.prefersLargeTitles = true
+            } else {
+                navigationController?.navigationBar.prefersLargeTitles = false
+            }
         }
     }
     
@@ -31,8 +38,15 @@ class ClassesViewController: UIViewController, UICollectionViewDelegateFlowLayou
         classifierName.layer.shadowOpacity = 0
         classifierName.layer.shadowRadius = 2
         classifierName.layer.shadowOffset = CGSize(width: 0, height: 0)
-
-        if classifier.name != "Untitled Model" {
+        
+        if classifier.classifierId != nil {
+            navigationItem.title = classifier.name
+            classifierName.isHidden = true
+            scrimSolid.isHidden = true
+            skrimGradient.isHidden = true
+        }
+        
+        if classifier.name != "Untitled Model" || classifier.classifierId != nil {
             classifierName.text = classifier.name
         }
 
@@ -71,6 +85,9 @@ class ClassesViewController: UIViewController, UICollectionViewDelegateFlowLayou
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if classifier.classifierId != nil {
+            return UIEdgeInsetsMake(CGFloat(20.0), CGFloat(20.0), CGFloat(86.0), CGFloat(20.0))
+        }
         return UIEdgeInsetsMake(CGFloat(86.0), CGFloat(20.0), CGFloat(86.0), CGFloat(20.0))
     }
     

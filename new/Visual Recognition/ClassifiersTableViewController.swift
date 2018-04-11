@@ -204,6 +204,7 @@ class ClassifiersTableViewController: UITableViewController {
             let pendingClassifier:PendingClassifier = NSEntityDescription.insertNewObject(forEntityName: pendingClassifierClassName, into: DatabaseController.getContext()) as! PendingClassifier
             pendingClassifier.id = UUID().uuidString
             pendingClassifier.name = selectedItem.name
+            pendingClassifier.classifierId = selectedItem.classifierId
             pendingClassifier.created = Date()
             
             DatabaseController.saveContext()
