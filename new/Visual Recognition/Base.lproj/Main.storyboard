@@ -704,52 +704,16 @@
                                                 <segue destination="hUd-qC-pyW" kind="unwind" identifier="unwindToClassifiersFromTrain" unwindAction="unwindToClassifiersWithSegue:" id="PbG-xM-nsD"/>
                                             </connections>
                                         </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Train" id="mGm-fL-fNq">
+                                            <connections>
+                                                <action selector="train" destination="Pxa-Ud-R3c" id="qPK-8C-1Qd"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="9Yk-l7-Orz">
-                                <rect key="frame" x="47" y="237.5" width="280.5" height="192"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Train your model?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDI-sL-NhK">
-                                        <rect key="frame" x="0.0" y="0.0" width="280.5" height="41"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="34"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d0d-bB-aFC">
-                                        <rect key="frame" x="20.5" y="61" width="240" height="10"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="10" id="TFA-tA-Zo4"/>
-                                        </constraints>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pcn-7D-KzG" customClass="RoundedButton" customModule="Visual_Recognition" customModuleProvider="target">
-                                        <rect key="frame" x="25.5" y="91" width="230" height="51"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="34"/>
-                                        <inset key="contentEdgeInsets" minX="80" minY="5" maxX="80" maxY="5"/>
-                                        <state key="normal" title="Train">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="color">
-                                                <color key="value" red="0.47058823529999999" green="0.38823529410000002" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="train" destination="Pxa-Ud-R3c" eventType="touchUpInside" id="Knr-fh-Xe7"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0t9-iu-sNf">
-                                        <rect key="frame" x="66" y="162" width="149" height="30"/>
-                                        <state key="normal" title="Add another category"/>
-                                        <connections>
-                                            <segue destination="hUd-qC-pyW" kind="unwind" identifier="additionalClasses" unwindAction="unwindToSnapperFromTrainWithSegue:" id="7Rx-zV-bkQ"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Model Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NPP-7l-h3Q">
-                                <rect key="frame" x="16" y="84" width="343" height="46"/>
+                                <rect key="frame" x="16" y="165" width="343" height="46"/>
                                 <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="KXF-2y-NMZ"/>
@@ -758,19 +722,38 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0t9-iu-sNf">
+                                <rect key="frame" x="113" y="251" width="149" height="30"/>
+                                <state key="normal" title="Add another category"/>
+                                <connections>
+                                    <segue destination="hUd-qC-pyW" kind="unwind" identifier="additionalClasses" unwindAction="unwindToSnapperFromTrainWithSegue:" id="7Rx-zV-bkQ"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name your model" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDI-sL-NhK">
+                                <rect key="frame" x="16" y="104" width="343" height="41"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="34"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="hUR-s5-5n6" firstAttribute="leading" secondItem="t3s-uz-e2A" secondAttribute="leading" id="076-et-qzH"/>
-                            <constraint firstItem="NPP-7l-h3Q" firstAttribute="top" secondItem="hUR-s5-5n6" secondAttribute="bottom" constant="20" id="5uh-Ka-mgL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="PDI-sL-NhK" secondAttribute="trailing" id="1ca-Pn-zw7"/>
                             <constraint firstAttribute="trailing" secondItem="hUR-s5-5n6" secondAttribute="trailing" id="7zs-X6-Lgd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="NPP-7l-h3Q" secondAttribute="trailing" id="DXI-PI-0P1"/>
+                            <constraint firstItem="NPP-7l-h3Q" firstAttribute="top" secondItem="PDI-sL-NhK" secondAttribute="bottom" constant="20" id="DdZ-oK-IT3"/>
                             <constraint firstItem="hUR-s5-5n6" firstAttribute="top" secondItem="Rrd-7L-KGP" secondAttribute="bottom" id="Fso-P8-V9G"/>
-                            <constraint firstItem="NPP-7l-h3Q" firstAttribute="leading" secondItem="t3s-uz-e2A" secondAttribute="leadingMargin" id="X89-g9-tB6"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="NPP-7l-h3Q" secondAttribute="trailing" id="a1o-dD-h0O"/>
-                            <constraint firstItem="9Yk-l7-Orz" firstAttribute="centerX" secondItem="t3s-uz-e2A" secondAttribute="centerX" id="kAD-xb-j66"/>
-                            <constraint firstItem="9Yk-l7-Orz" firstAttribute="centerY" secondItem="t3s-uz-e2A" secondAttribute="centerY" id="y8e-Sy-jSp"/>
+                            <constraint firstItem="0t9-iu-sNf" firstAttribute="centerX" secondItem="t3s-uz-e2A" secondAttribute="centerX" id="LEB-4q-4zX"/>
+                            <constraint firstItem="0t9-iu-sNf" firstAttribute="top" secondItem="NPP-7l-h3Q" secondAttribute="bottom" constant="40" id="RPT-Ze-3KE"/>
+                            <constraint firstItem="NPP-7l-h3Q" firstAttribute="leading" secondItem="t3s-uz-e2A" secondAttribute="leadingMargin" id="edY-06-A5n"/>
+                            <constraint firstItem="PDI-sL-NhK" firstAttribute="leading" secondItem="t3s-uz-e2A" secondAttribute="leadingMargin" id="lar-zV-wT5"/>
+                            <constraint firstItem="PDI-sL-NhK" firstAttribute="top" secondItem="hUR-s5-5n6" secondAttribute="bottom" constant="40" id="wVx-tb-xXa"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="modelName" destination="NPP-7l-h3Q" id="d2d-CN-bJD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NXh-b0-YrB" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="hUd-qC-pyW" userLabel="Exit" sceneMemberID="exit"/>

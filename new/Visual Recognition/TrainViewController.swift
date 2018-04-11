@@ -10,7 +10,14 @@ import UIKit
 import CoreData
 
 class TrainViewController: UIViewController {
+    @IBOutlet var modelName: UITextField!
+    
     var classifier = PendingClassifier()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        modelName.becomeFirstResponder()
+    }
 
     @IBAction func train() {
         print("train")
@@ -28,6 +35,7 @@ class TrainViewController: UIViewController {
         
         // Not sure if this needs to be weak or unowned. You shouldn't be able to leave the page so we can probably leave it as is...?
         // Lets do weak to be safe
+        classifier.name = modelName.text!
         classifier.train(completion: { [weak self] response in
             guard let `self` = self else { return }
             self.dismiss(animated: false, completion: {
