@@ -103,18 +103,12 @@ class ClassifiersTableViewController: UITableViewController {
         }
         
         let fetchRequest:NSFetchRequest<PendingClassifier> = PendingClassifier.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "classifierId = nil")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(PendingClassifier.created), ascending: false)]
 
         do {
-            let searchResults = try DatabaseController.getContext().fetch(fetchRequest)
-            pending = []
-            for result in searchResults as [PendingClassifier] {
-                pending.append(result)
-            }
-
-            let epoch = Date().addingTimeInterval(0 - Date().timeIntervalSince1970)
-            pending = pending.sorted(by: { $0.created ?? epoch > $1.created ?? epoch })
-        }
-        catch {
+            pending = try DatabaseController.getContext().fetch(fetchRequest)
+        } catch {
             print("Error: \(error)")
         }
         tableView.reloadData()
@@ -199,6 +193,23 @@ class ClassifiersTableViewController: UITableViewController {
             
             let selectedItem = classifiers[indexPath.row]
             
+            let fetchRequest: NSFetchRequest<PendingClassifier> = PendingClassifier.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "classifierId == %@", selectedItem.classifierId)
+            // We probably want the newest one? But there should only be 1!
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(PendingClassifier.created), ascending: false)]
+            
+            do {
+                if let model: PendingClassifier = try DatabaseController.getContext().fetch(fetchRequest).first {
+                    // We already have a model for the classifier id, so show that
+                    destination.classifier = model
+                    return
+                }
+                
+            } catch {
+                print("Error: \(error)")
+            }
+            
+            // We didn't find anything, make one.
             let pendingClassifierClassName:String = String(describing: PendingClassifier.self)
             
             let pendingClassifier:PendingClassifier = NSEntityDescription.insertNewObject(forEntityName: pendingClassifierClassName, into: DatabaseController.getContext()) as! PendingClassifier
