@@ -42,7 +42,6 @@ class ClassesCollectionViewController: UICollectionViewController, ClassCellDele
         if let classifierId = classifier.classifierId {
             Classifier.buildClassifier(fromId: classifierId, completion: { [weak self] classifier in
                 guard let `self` = self else { return }
-                print(classifier.classes)
                 let classNames: [String] = self.classes.flatMap({ result in
                     return result.pendingClass.name
                 })
@@ -100,7 +99,7 @@ class ClassesCollectionViewController: UICollectionViewController, ClassCellDele
             
             cell.delegate = self
             
-            cell.remove.isHidden = !isEditing
+            cell.remove.isHidden = !isEditing || classes[indexPath.item].pendingClass.isLocked
             
             cell.classImageImageView.layer.cornerRadius = 5
             cell.classImageImageView.clipsToBounds = true

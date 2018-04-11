@@ -21,7 +21,7 @@ extension PendingClass {
     @NSManaged public var locked: NSNumber?
     var isLocked: Bool {
         get {
-            return Bool(locked!)
+            return Bool(locked ?? false)
         }
         set {
             locked = NSNumber(value: newValue)
