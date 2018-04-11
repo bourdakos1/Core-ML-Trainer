@@ -129,6 +129,24 @@ class ClassifiersTableViewController: UITableViewController {
         // Unwind
     }
     
+    override func shouldPerformSegue(withIdentifier identifier: String?, sender: Any?) -> Bool {
+        switch(identifier ?? "") {
+        case "retrainClassifier":
+            guard let selectedCell = sender as? ClassifierTableViewCell else {
+                fatalError("Unexpected sender: \(String(describing: sender))")
+            }
+            
+            guard let indexPath = tableView.indexPath(for: selectedCell) else {
+                fatalError("The selected cell is not being displayed by the table")
+            }
+            
+            let selectedItem = classifiers[indexPath.row]
+            return selectedItem.status == .ready
+        default:
+            return true
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         

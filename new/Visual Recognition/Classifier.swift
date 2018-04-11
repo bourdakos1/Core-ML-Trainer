@@ -97,6 +97,55 @@ extension Classifier {
         }
     }
     
+    static func buildClassifier(fromId classifierId: String, completion: @escaping (_ results: Classifier) -> Void, error: @escaping () -> Void) {
+        guard let path = Bundle.main.path(forResource: "Keys", ofType: "plist") else {
+            error()
+            return
+        }
+        
+        guard let apiKey = NSDictionary(contentsOfFile: path)?["API_KEY"] else {
+            error()
+            return
+        }
+        
+        let url = "\(Classifier.BASE_URL)/\(classifierId)"
+        
+        let params = [
+            "api_key": apiKey,
+            "version": "2016-05-20",
+            "verbose": "true"
+        ]
+        
+        Alamofire.request(url, parameters: params).validate().responseJSON { response in
+            print(response)
+            switch response.result {
+            case .success:
+                guard let json = response.result.value as? [String : Any] else {
+                    error()
+                    return
+                }
+                
+                print(json)
+                
+//                guard let classifiersJSON = json["classifiers"] as? [Any] else {
+//                    error()
+//                    return
+//                }
+                
+                guard let classifier = Classifier(json: json) else {
+                    error()
+                    return
+                }
+                
+                completion(classifier)
+                
+            case .failure:
+                error()
+                return
+            }
+        }
+    }
+    
     static func buildList(completion: @escaping (_ results: [Classifier]) -> Void, error: @escaping () -> Void) {
         guard let path = Bundle.main.path(forResource: "Keys", ofType: "plist") else {
             error()

@@ -26,7 +26,10 @@ class ClassesCollectionViewController: UICollectionViewController, ClassCellDele
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // Fix this...
         classes = []
+        
         for result in classifier.relationship?.allObjects as! [PendingClass] {
             classes.append(grabPhoto(for: result))
         }
@@ -35,6 +38,38 @@ class ClassesCollectionViewController: UICollectionViewController, ClassCellDele
         classes = classes.sorted(by: { $0.pendingClass.created ?? epoch < $1.pendingClass.created ?? epoch })
 
         reloadData()
+        
+        if let classifierId = classifier.classifierId {
+            Classifier.buildClassifier(fromId: classifierId, completion: { [weak self] classifier in
+                guard let `self` = self else { return }
+                print(classifier.classes)
+                let classNames: [String] = self.classes.flatMap({ result in
+                    return result.pendingClass.name
+                })
+                
+                let newClasses = classifier.classes.filter({ !classNames.contains($0) })
+                
+                let _ = newClasses.map({ className in
+                    let pendingClassClassName: String = String(describing: PendingClass.self)
+                    
+                    let pendingClass: PendingClass = NSEntityDescription.insertNewObject(forEntityName: pendingClassClassName, into: DatabaseController.getContext()) as! PendingClass
+                    
+                    pendingClass.name = className
+                    pendingClass.id = UUID().uuidString
+                    pendingClass.created = Date()
+                    pendingClass.isLocked = true
+                    
+                    self.classifier.addToRelationship(pendingClass)
+                    
+                    self.classes.append(self.grabPhoto(for: pendingClass))
+                    
+                    self.insertItem()
+                    
+                    DatabaseController.saveContext()
+                })
+                }, error: {
+            })
+        }
     }
     
     func reloadData() {
