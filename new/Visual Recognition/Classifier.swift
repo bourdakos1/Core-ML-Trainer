@@ -117,20 +117,12 @@ extension Classifier {
         ]
         
         Alamofire.request(url, parameters: params).validate().responseJSON { response in
-            print(response)
             switch response.result {
             case .success:
                 guard let json = response.result.value as? [String : Any] else {
                     error()
                     return
                 }
-                
-                print(json)
-                
-//                guard let classifiersJSON = json["classifiers"] as? [Any] else {
-//                    error()
-//                    return
-//                }
                 
                 guard let classifier = Classifier(json: json) else {
                     error()

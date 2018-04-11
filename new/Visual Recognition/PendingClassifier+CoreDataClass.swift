@@ -19,6 +19,22 @@ public class PendingClassifier: NSManagedObject {
             var paths = [URL]()
             
             for result in relationship?.allObjects as! [PendingClass] {
+                // Check if the class has any images to send.
+                do {
+                    // Get the directory contents urls (including subfolders urls)
+                    let directoryContents = try FileManager.default.contentsOfDirectory(at: documentsUrl.appendingPathComponent(result.id!), includingPropertiesForKeys: nil, options: [])
+                    
+                    let jpgFiles = directoryContents.filter{ $0.pathExtension == "jpg" }
+                    
+                    if jpgFiles.count <= 0 {
+                        break
+                    }
+                    
+                } catch {
+                    break
+                }
+                
+                // If it does, start the zip process.
                 let destination = documentsUrl.appendingPathComponent(result.name!).appendingPathExtension("zip")
                 
                 paths.append(destination)
@@ -52,7 +68,13 @@ public class PendingClassifier: NSManagedObject {
                 }
             }
             
-            let url = URL(string: "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classifiers")!
+            var url = URL(string: "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classifiers")!
+            
+            if let path = classifierId {
+                url.appendPathComponent(path)
+            }
+            
+            print(url)
             
             let urlRequest = URLRequest(url: url)
             
