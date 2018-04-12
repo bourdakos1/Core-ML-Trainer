@@ -32,7 +32,7 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
          access is optional. If audio access is denied, audio is not recorded
          during movie recording.
          */
-        switch AVCaptureDevice.authorizationStatus(for: AVMediaType.video) {
+        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
         case .authorized:
             // The user has previously granted access to the camera.
             break
@@ -47,7 +47,7 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
              create an AVCaptureDeviceInput for audio during session setup.
              */
             sessionQueue.suspend()
-            AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { [unowned self] granted in
+            AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo, completionHandler: { [unowned self] granted in
                 if !granted {
                     self.setupResult = .notAuthorized
                 }
@@ -121,7 +121,8 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        sessionQueue.async { [unowned self] in
+        sessionQueue.async { [weak self] in
+            guard let `self` = self else { return }
             if self.setupResult == .success {
                 self.session.stopRunning()
                 self.isSessionRunning = self.session.isRunning
@@ -166,19 +167,19 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
          We do not create an AVCaptureMovieFileOutput when setting up the session because the
          AVCaptureMovieFileOutput does not support movie recording with AVCaptureSessionPresetPhoto.
          */
-        session.sessionPreset = AVCaptureSession.Preset.high
+        session.sessionPreset = AVCaptureSessionPresetHigh
         
         // Add video input.
         do {
             var defaultVideoDevice: AVCaptureDevice?
             
             // Choose the back dual camera if available, otherwise default to a wide angle camera.
-            if let dualCameraDevice = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInDualCamera, for: AVMediaType.video, position: .back) {
+            if let dualCameraDevice = AVCaptureDevice.defaultDevice(withDeviceType: .builtInDualCamera, mediaType: AVMediaTypeVideo, position: .back) {
                 defaultVideoDevice = dualCameraDevice
-            } else if let backCameraDevice = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInWideAngleCamera, for: AVMediaType.video, position: .back) {
+            } else if let backCameraDevice = AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera, mediaType: AVMediaTypeVideo, position: .back) {
                 // If the back dual camera is not available, default to the back wide angle camera.
                 defaultVideoDevice = backCameraDevice
-            } else if let frontCameraDevice = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInWideAngleCamera, for: AVMediaType.video, position: .front) {
+            } else if let frontCameraDevice = AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera, mediaType: AVMediaTypeVideo, position: .front) {
                 /*
                  In some cases where users break their phones, the back wide angle camera is not available.
                  In this case, we should default to the front wide angle camera.
@@ -195,7 +196,7 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
                 let captureMetadataOutput = AVCaptureMetadataOutput()
                 self.session.addOutput(captureMetadataOutput)
                 captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-                captureMetadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
+                captureMetadataOutput.metadataObjectTypes = [AVMetadataObjectTypeQRCode]
                 
                 DispatchQueue.main.async { [unowned self] in
                     /*
@@ -216,7 +217,7 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
                         }
                     }
                     
-                    self.previewView.videoPreviewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                    self.previewView.videoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
                     self.previewView.videoPreviewLayer.connection?.videoOrientation = initialVideoOrientation
                 }
             } else {
@@ -248,7 +249,7 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         session.commitConfiguration()
     }
     
-    func metadataOutput(_ captureOutput: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+    func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
 
     }
     
@@ -279,14 +280,14 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
     
     @IBOutlet weak var cameraButton: UIButton!
     
-    private let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera, AVCaptureDevice.DeviceType.builtInDualCamera], mediaType: AVMediaType.video, position: .unspecified)
+    private let videoDeviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera, .builtInDualCamera], mediaType: AVMediaTypeVideo, position: .unspecified)
     
     @IBAction private func changeCamera(_ cameraButton: UIButton) {
         cameraButton.isEnabled = false
         photoButton.isEnabled = false
         
         sessionQueue.async { [unowned self] in
-            let currentVideoDevice = self.videoDeviceInput.device
+            let currentVideoDevice = self.videoDeviceInput.device!
             let currentPosition = currentVideoDevice.position
             
             let preferredPosition: AVCaptureDevice.Position
@@ -295,20 +296,20 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
             switch currentPosition {
             case .unspecified, .front:
                 preferredPosition = .back
-                preferredDeviceType = AVCaptureDevice.DeviceType.builtInDualCamera
+                preferredDeviceType = .builtInDualCamera
                 
             case .back:
                 preferredPosition = .front
-                preferredDeviceType = AVCaptureDevice.DeviceType.builtInWideAngleCamera
+                preferredDeviceType = .builtInWideAngleCamera
             }
             
-            let devices = self.videoDeviceDiscoverySession.devices
+            let devices = self.videoDeviceDiscoverySession?.devices
             var newVideoDevice: AVCaptureDevice? = nil
             
             // First, look for a device with both the preferred position and device type. Otherwise, look for a device with only the preferred position.
-            if let device = devices.first(where: { $0.position == preferredPosition && $0.deviceType == preferredDeviceType }) {
+            if let device = devices?.first(where: { $0.position == preferredPosition && $0.deviceType == preferredDeviceType }) {
                 newVideoDevice = device
-            } else if let device = devices.first(where: { $0.position == preferredPosition }) {
+            } else if let device = devices?.first(where: { $0.position == preferredPosition }) {
                 newVideoDevice = device
             }
             
@@ -354,7 +355,7 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
     private func focus(with focusMode: AVCaptureDevice.FocusMode, exposureMode: AVCaptureDevice.ExposureMode, at devicePoint: CGPoint, monitorSubjectAreaChange: Bool) {
         sessionQueue.async { [unowned self] in
             print("I should monitor changes: \(monitorSubjectAreaChange)")
-            let device = self.videoDeviceInput.device
+            let device = self.videoDeviceInput.device!
             do {
                 try device.lockForConfiguration()
                 
@@ -405,13 +406,14 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
         
         sessionQueue.async { [unowned self] in
             // Update the photo output's connection to match the video orientation of the video preview layer.
-            if let photoOutputConnection = self.photoOutput.connection(with: AVMediaType.video) {
+            if let photoOutputConnection = self.photoOutput.connection(withMediaType: AVMediaTypeVideo) {
                 photoOutputConnection.videoOrientation = videoPreviewLayerOrientation!
             }
             
             let photoSettings = AVCapturePhotoSettings()
             // Flash set to auto and high resolution photo enabled.
             if self.videoDeviceInput.device.isFlashAvailable {
+//                photoSettings.flashMode = .auto
                 photoSettings.flashMode = .off
             }
             
@@ -489,7 +491,7 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
             
             DispatchQueue.main.async { [unowned self] in
                 // Only enable the ability to change camera if the device has more than one camera.
-                self.cameraButton.isEnabled = isSessionRunning && self.videoDeviceDiscoverySession.uniqueDevicePositionsCount() > 1
+                self.cameraButton.isEnabled = isSessionRunning && self.videoDeviceDiscoverySession!.uniqueDevicePositionsCount() > 1
                 self.photoButton.isEnabled = isSessionRunning
             }
         } else {

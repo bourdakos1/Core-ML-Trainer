@@ -9,23 +9,20 @@
 import Foundation
 import CoreData
 
-
 extension PendingClassifier {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<PendingClassifier> {
         return NSFetchRequest<PendingClassifier>(entityName: "PendingClassifier")
     }
 
     @NSManaged public var name: String?
+    @NSManaged public var classifierId: String?
     @NSManaged public var id: String?
     @NSManaged public var created: Date?
     @NSManaged public var relationship: NSSet?
-
 }
 
 // MARK: Generated accessors for relationship
 extension PendingClassifier {
-
     @objc(addRelationshipObject:)
     @NSManaged public func addToRelationship(_ value: PendingClass)
 
@@ -37,5 +34,4 @@ extension PendingClassifier {
 
     @objc(removeRelationship:)
     @NSManaged public func removeFromRelationship(_ values: NSSet)
-
 }

@@ -26,3 +26,15 @@ extension UIImage {
         return UIGraphicsGetImageFromCurrentImageContext()
     }
 }
+
+extension UIRefreshControl {
+    func beginRefreshingManually() {
+        // This may cause issues with our swanky navigation controller.
+        if let scrollView = superview as? UIScrollView {
+            if (scrollView.contentOffset.y == 0) {
+                scrollView.setContentOffset(CGPoint(x: 0, y: -frame.height), animated: true)
+                beginRefreshing()
+            }
+        }
+    }
+}

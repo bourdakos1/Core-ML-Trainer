@@ -14,7 +14,11 @@ class NameClassViewController: UIViewController {
     var pendingClass = PendingClass()
     
     @IBOutlet var container: UIView!
-    @IBOutlet var textField: UITextField!
+    @IBOutlet var textField: UITextField! {
+        didSet {
+            textField.text = pendingClass.name
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -32,7 +36,7 @@ class NameClassViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(notification: NSNotification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
@@ -50,7 +54,7 @@ class NameClassViewController: UIViewController {
         }
     }
     
-    @objc func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(notification: NSNotification) {
         if view.frame.size.height != UIWindow().frame.size.height {
             view.frame.size.height = UIWindow().frame.size.height
             
@@ -77,13 +81,13 @@ class NameClassViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if  segue.identifier == "showEmbededCollection",
+        if segue.identifier == "showEmbededCollection",
             let destination = segue.destination as? ThumbCollectionViewController {
             destination.pendingClass = pendingClass
             destination.classifier = classifier
         }
         
-        if  segue.identifier == "newClass",
+        if segue.identifier == "newClass",
             let destination = segue.destination as? SnapperViewController {
             
             let pendingClassClassName: String = String(describing: PendingClass.self)
@@ -104,7 +108,7 @@ class NameClassViewController: UIViewController {
             destination.classifier = classifier
         }
         
-        if  segue.identifier == "askToTrain",
+        if segue.identifier == "askToTrain",
             let destination = segue.destination as? TrainViewController {
             
             // Save the class name.
@@ -112,6 +116,15 @@ class NameClassViewController: UIViewController {
             
             DatabaseController.saveContext()
             destination.classifier = classifier
+        }
+        
+        if segue.identifier == "unwindToClasses",
+            let destination = segue.destination as? ClassesViewController {
+            
+            // Save the class name.
+            pendingClass.name = textField.text
+            
+            DatabaseController.saveContext()
         }
     }
 }

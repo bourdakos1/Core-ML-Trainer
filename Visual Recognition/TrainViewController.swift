@@ -10,7 +10,20 @@ import UIKit
 import CoreData
 
 class TrainViewController: UIViewController {
+    @IBOutlet var modelName: UITextField! {
+        didSet {
+            if classifier.name != "Untitled Model" {
+                modelName.text = classifier.name
+            }
+        }
+    }
+    
     var classifier = PendingClassifier()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        modelName.becomeFirstResponder()
+    }
 
     @IBAction func train() {
         print("train")
@@ -26,6 +39,14 @@ class TrainViewController: UIViewController {
         alert.view.addSubview(loadingIndicator)
         present(alert, animated: true, completion: nil)
         
+        if let text = modelName.text, text.isEmpty {
+            classifier.name = "Untitled Model"
+        } else if let text = modelName.text {
+            classifier.name = text
+        }
+        
+        DatabaseController.saveContext()
+        
         // Not sure if this needs to be weak or unowned. You shouldn't be able to leave the page so we can probably leave it as is...?
         // Lets do weak to be safe
         classifier.train(completion: { [weak self] response in
@@ -37,6 +58,14 @@ class TrainViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let text = modelName.text, text.isEmpty {
+            classifier.name = "Untitled Model"
+        } else if let text = modelName.text {
+            classifier.name = text
+        }
+        
+        DatabaseController.saveContext()
+        
         if  segue.identifier == "additionalClasses",
             let destination = segue.destination as? SnapperViewController {
             

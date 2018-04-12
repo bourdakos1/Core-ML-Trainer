@@ -200,6 +200,7 @@ class SnapperViewController: CameraViewController {
         let filename = path.appendingPathComponent("\(NSUUID().uuidString).jpg")
         
         do {
+            print(filename)
             try UIImageJPEGRepresentation(reducedImage, 0.4)!.write(to: filename)
         } catch {
             print(error.localizedDescription)
