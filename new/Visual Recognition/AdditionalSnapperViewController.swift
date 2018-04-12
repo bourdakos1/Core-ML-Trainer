@@ -17,7 +17,15 @@ class AdditionalSnapperViewController: CameraViewController {
     @IBOutlet var thumbnail: UIView!
     @IBOutlet var thumbnailImage: UIImageView!
     
-    @IBOutlet var nextButton: UIButton!
+    @IBOutlet var nextButton: UIButton! {
+        didSet {
+            if pendingClass.isLocked {
+                if let image = UIImage(named: "done") {
+                    nextButton.setImage(image, for: .normal)
+                }
+            }
+        }
+    }
     
     @IBOutlet var numLabel: UILabel!
     @IBOutlet var numLabelView: UIView!
@@ -190,6 +198,14 @@ class AdditionalSnapperViewController: CameraViewController {
             try UIImageJPEGRepresentation(reducedImage, 0.4)!.write(to: filename)
         } catch {
             print(error.localizedDescription)
+        }
+    }
+    
+    @IBAction func done() {
+        if pendingClass.isLocked {
+            performSegue(withIdentifier: "unwindToClasses", sender: self)
+        } else {
+            performSegue(withIdentifier: "renameClass", sender: self)
         }
     }
     

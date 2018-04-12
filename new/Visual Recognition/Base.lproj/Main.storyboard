@@ -800,7 +800,7 @@
                                 </constraints>
                                 <state key="normal" image="next"/>
                                 <connections>
-                                    <segue destination="wy7-r6-Dj5" kind="showDetail" identifier="renameClass" action="showViewController:sender:" id="9KB-BV-QPh"/>
+                                    <action selector="done" destination="ItP-jq-FQp" eventType="touchUpInside" id="3cv-7A-jmI"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j1L-TX-Y1w">
@@ -833,7 +833,7 @@
                                 </constraints>
                                 <state key="normal" image="cancel"/>
                                 <connections>
-                                    <segue destination="WxU-lX-jID" kind="unwind" unwindAction="unwindToClassesWithSegue:" id="hqR-Em-usd"/>
+                                    <segue destination="WxU-lX-jID" kind="unwind" identifier="unwindToClasses" unwindAction="unwindToClassesWithSegue:" id="sUt-Qk-Ajr"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scrim" translatesAutoresizingMaskIntoConstraints="NO" id="vkc-1P-l1e">
@@ -898,6 +898,7 @@
                         <outlet property="previewView" destination="ZZw-Wv-Yqj" id="Eeo-VF-Bhk"/>
                         <outlet property="thumbnail" destination="feA-jR-8yb" id="FJo-12-MIi"/>
                         <outlet property="thumbnailImage" destination="K0y-nW-WE8" id="5oe-y1-p7V"/>
+                        <segue destination="wy7-r6-Dj5" kind="showDetail" identifier="renameClass" id="8wz-6x-ZC0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nvJ-bh-TaT" userLabel="First Responder" sceneMemberID="firstResponder"/>
