@@ -42,28 +42,30 @@ public class PendingClassifier: NSManagedObject {
                 
                 // Delete any old zips before reziping the new images.
                 if FileManager.default.fileExists(atPath: destination.path) {
-                    print("Exists, deleting")
                     // Exist so delete first and then try.
                     do {
                         try FileManager.default.removeItem(at: destination)
                     } catch {
                         print("Error: \(error.localizedDescription)")
                         if FileManager.default.fileExists(atPath: destination.path) {
+                            // The old zip still exist, fatal error, exit retraining.
                             print("still exists")
+                            completion("")
+                            return
                         }
-                        completion("FAILUREEEEE")
-                        return
+                        // The old zip is gone now, all is okay.
                     }
                 }
                 
-                // Make sure it's actually gone...
+                // Make sure it's actually gone..., uh what why did I do this? ^^
                 if !FileManager.default.fileExists(atPath: destination.path) {
                     do {
                         try Zip.zipFiles(paths: [documentsUrl.appendingPathComponent(result.id!)], zipFilePath: destination, password: nil, progress: { progress in
                             print("Zipping: \(progress)")
                         })
                     } catch {
-                        completion("FAILUREEEEE")
+                        // Couldn't zip, fatal error.
+                        completion("")
                         return
                     }
                 }
@@ -80,9 +82,12 @@ public class PendingClassifier: NSManagedObject {
             let urlRequest = URLRequest(url: url)
             
             guard let path = Bundle.main.path(forResource: "Keys", ofType: "plist") else {
-                completion("FAILUREEEEE")
+                // No api key plist, fatal error.
+                completion("")
                 return
             }
+            
+            // We should check below and not forcefully unwrap
             
             let parameters: Parameters = [
                 "api_key": (NSDictionary(contentsOfFile: path)?["API_KEY"] as? String)!,
@@ -110,7 +115,8 @@ public class PendingClassifier: NSManagedObject {
                             
                             if let response = response.response {
                                 if !(200 ..< 300 ~= response.statusCode) {
-                                    completion("FAILUREEEEE")
+                                    // We get a status code we don't like, don't try and parse the json.
+                                    completion("")
                                     return
                                 }
                             }
@@ -143,13 +149,13 @@ public class PendingClassifier: NSManagedObject {
                         })
                     case .failure(let encodingError):
                         print(encodingError)
-                        completion("FAILUREEEEE")
+                        completion("")
                     }
             })
         }
         catch {
             print(error)
-            completion("FAILUREEEEE")
+            completion("")
         }
     }
 }
