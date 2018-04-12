@@ -16,9 +16,16 @@ struct ClassObj {
     var imageCount: Int
 }
 
+protocol CreateClassDelegate {
+    func createClass()
+    func removeClass()
+}
+
 class ClassesCollectionViewController: UICollectionViewController, ClassCellDelegate {    
     var classifier = PendingClassifier()
     var classes = [ClassObj]()
+    
+    var delegate: CreateClassDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -160,11 +167,36 @@ class ClassesCollectionViewController: UICollectionViewController, ClassCellDele
     }
     
     func remove(cell: ClassCollectionViewCell) {
-        guard let indexpath = collectionView?.indexPath(for: cell) else {
+        guard let indexPath = collectionView?.indexPath(for: cell) else {
             return
         }
-        classes.remove(at: indexpath.item)
-        collectionView?.deleteItems(at: [indexpath])
+        
+        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let classToRemove = classes[indexPath.item].pendingClass
+        
+        let path = documentsUrl.appendingPathComponent(classifier.id!).appendingPathComponent(classToRemove.id!)
+
+        do {
+            try FileManager.default.removeItem(at: path)
+            DatabaseController.getContext().delete(classToRemove)
+            DatabaseController.saveContext()
+            delegate?.removeClass()
+        } catch {
+            // We might have tried to delete a folder that didn't exist (because no images were take)
+            // so it's safe to remove the database connection
+            print("Error: \(error.localizedDescription)")
+            if FileManager.default.fileExists(atPath: path.path) {
+                print("still exists")
+            } else {
+                DatabaseController.getContext().delete(classToRemove)
+                DatabaseController.saveContext()
+                delegate?.removeClass()
+            }
+        }
+        
+        classes.remove(at: indexPath.item)
+        collectionView?.deleteItems(at: [indexPath])
     }
     
     @IBAction func createClass() {
@@ -194,6 +226,8 @@ class ClassesCollectionViewController: UICollectionViewController, ClassCellDele
         self.insertItem()
 
         DatabaseController.saveContext()
+        
+        delegate?.createClass()
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String?, sender: Any?) -> Bool {

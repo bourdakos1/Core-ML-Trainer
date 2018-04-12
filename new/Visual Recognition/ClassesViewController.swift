@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ClassesViewController: UIViewController, UICollectionViewDelegateFlowLayout {
+class ClassesViewController: UIViewController, UICollectionViewDelegateFlowLayout, CreateClassDelegate {
     var classifier = PendingClassifier()
     
     @IBOutlet weak var blackBackground: UIView!
@@ -16,6 +16,11 @@ class ClassesViewController: UIViewController, UICollectionViewDelegateFlowLayou
     
     @IBOutlet weak var scrimSolid: UIView!
     @IBOutlet weak var skrimGradient: UIImageView!
+    
+    @IBOutlet weak var sendImage: UIImageView!
+    @IBOutlet weak var errorLabel: UILabel!
+    
+    @IBOutlet weak var trainButton: RoundedButton!
     
     override func viewWillAppear(_ animated: Bool) {
         if #available(iOS 11.0, *) {
@@ -27,10 +32,34 @@ class ClassesViewController: UIViewController, UICollectionViewDelegateFlowLayou
         }
     }
     
+    func invalidateButton() {
+        let numClasses = classifier.relationship?.allObjects.count
+        
+        if let numClasses = numClasses, numClasses < 2 {
+            sendImage.isHidden = true
+            errorLabel.isHidden = false
+            trainButton.color = UIColor(red: 220 / 255, green: 221 / 255, blue: 220 / 255, alpha: 1)
+            trainButton.isUserInteractionEnabled = false
+            
+            if numClasses == 0 {
+                errorLabel.text = "Add at least 2 categories to train."
+            } else if numClasses == 1 {
+                errorLabel.text = "Add one more category to train."
+            }
+        } else {
+            sendImage.isHidden = false
+            errorLabel.isHidden = true
+            trainButton.color = UIColor(red: 140 / 255, green: 126 / 255, blue: 240 / 255, alpha: 1)
+            trainButton.isUserInteractionEnabled = true
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = editButtonItem
+        
+        invalidateButton()
         
         blackBackground.isHidden = true
 
@@ -167,8 +196,17 @@ class ClassesViewController: UIViewController, UICollectionViewDelegateFlowLayou
             let destination = segue.destination as? ClassesCollectionViewController {
             destination.classifier = classifier
             destination.collectionView?.delegate = self
+            destination.delegate = self
             destiny = destination
         }
+    }
+    
+    func createClass() {
+        invalidateButton()
+    }
+    
+    func removeClass() {
+        invalidateButton()
     }
     
     @IBAction func train() {

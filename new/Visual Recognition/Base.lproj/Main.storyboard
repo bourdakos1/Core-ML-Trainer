@@ -418,6 +418,12 @@
                                     <action selector="train" destination="NFc-Jy-oed" eventType="touchUpInside" id="wi6-e9-6i7"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add at least 2 categories to train." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYk-zt-aLJ">
+                                <rect key="frame" x="52.5" y="497.5" width="271" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trainSend" translatesAutoresizingMaskIntoConstraints="NO" id="FSP-Jl-T6D">
                                 <rect key="frame" x="176" y="497" width="22" height="22"/>
                                 <constraints>
@@ -442,6 +448,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="dYk-zt-aLJ" firstAttribute="centerX" secondItem="Z8I-I0-cNf" secondAttribute="centerX" id="1g5-i1-6xX"/>
                             <constraint firstItem="Fuo-Lg-toa" firstAttribute="leading" secondItem="dFP-ts-kco" secondAttribute="leading" id="4Mi-iV-RMY"/>
                             <constraint firstAttribute="trailing" secondItem="Fuo-Lg-toa" secondAttribute="trailing" id="4qK-Ew-GrH"/>
                             <constraint firstItem="0nT-Io-TnT" firstAttribute="leading" secondItem="dFP-ts-kco" secondAttribute="leading" id="5pb-hW-mvE"/>
@@ -450,6 +457,7 @@
                             <constraint firstAttribute="trailing" secondItem="Z8I-I0-cNf" secondAttribute="trailing" constant="20" id="9gf-T8-WvD"/>
                             <constraint firstItem="ecp-t6-OPK" firstAttribute="top" secondItem="nh4-ic-gLN" secondAttribute="bottom" id="9tS-Nn-zvG"/>
                             <constraint firstItem="ecp-t6-OPK" firstAttribute="leading" secondItem="dFP-ts-kco" secondAttribute="leading" id="DyO-QU-dgd"/>
+                            <constraint firstItem="dYk-zt-aLJ" firstAttribute="centerY" secondItem="Z8I-I0-cNf" secondAttribute="centerY" id="Gz3-8L-noF"/>
                             <constraint firstItem="Z8I-I0-cNf" firstAttribute="leading" secondItem="dFP-ts-kco" secondAttribute="leading" constant="20" id="Ibp-sH-gao"/>
                             <constraint firstAttribute="trailing" secondItem="evb-iT-Gds" secondAttribute="trailing" id="IcW-yC-2bv"/>
                             <constraint firstAttribute="trailing" secondItem="maY-yM-UMb" secondAttribute="trailing" id="IlW-Xy-v2S"/>
@@ -476,8 +484,11 @@
                     <connections>
                         <outlet property="blackBackground" destination="Fuo-Lg-toa" id="TLe-yw-fU3"/>
                         <outlet property="classifierName" destination="Fg8-Ed-1ju" id="ozl-Xh-Smz"/>
+                        <outlet property="errorLabel" destination="dYk-zt-aLJ" id="3uT-DE-hty"/>
                         <outlet property="scrimSolid" destination="evb-iT-Gds" id="gEh-Yw-z09"/>
+                        <outlet property="sendImage" destination="FSP-Jl-T6D" id="ZP4-Gs-SUo"/>
                         <outlet property="skrimGradient" destination="maY-yM-UMb" id="NEN-1S-oBg"/>
+                        <outlet property="trainButton" destination="Z8I-I0-cNf" id="Lqu-MK-IjM"/>
                         <segue destination="2OQ-W3-4iC" kind="unwind" identifier="toClassifierFromClasses" unwindAction="unwindToClassifiersWithSegue:" id="10C-Xi-AMV"/>
                     </connections>
                 </viewController>
