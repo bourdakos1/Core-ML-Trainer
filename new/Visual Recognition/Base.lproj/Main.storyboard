@@ -569,7 +569,7 @@
                                     <segue destination="ItP-jq-FQp" kind="presentation" identifier="showSnapper" id="Ae4-wl-cQp"/>
                                 </connections>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="newClassCell" id="SlG-IW-pTm">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="newClassCell" id="SlG-IW-pTm" customClass="CreateButtonCollectionViewCell" customModule="Visual_Recognition" customModuleProvider="target">
                                 <rect key="frame" x="205" y="0.0" width="170" height="276"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -614,6 +614,10 @@
                                     <constraint firstItem="39E-8t-GGH" firstAttribute="top" secondItem="SlG-IW-pTm" secondAttribute="top" id="zug-3D-RR2"/>
                                 </constraints>
                                 <size key="customSize" width="170" height="276"/>
+                                <connections>
+                                    <outlet property="button" destination="39E-8t-GGH" id="p3d-UU-dcU"/>
+                                    <outlet property="stackView" destination="j9X-1f-aQx" id="70r-ER-teB"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>

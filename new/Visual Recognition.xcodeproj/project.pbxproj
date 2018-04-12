@@ -22,6 +22,7 @@
 		2357D36420769CC1000AB50B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2357D36320769CC1000AB50B /* Extensions.swift */; };
 		23609DBB1EBA727800FD03FC /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 23609DBA1EBA727800FD03FC /* Keys.plist */; };
 		23666E34207C71FA0030033C /* AdditionalSnapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23666E33207C71FA0030033C /* AdditionalSnapperViewController.swift */; };
+		23666E36207EFD890030033C /* CreateButtonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23666E35207EFD890030033C /* CreateButtonCollectionViewCell.swift */; };
 		23742B5E1F1D296E00F52C1B /* Classifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23742B5D1F1D296E00F52C1B /* Classifier.swift */; };
 		2389A6FE1E7C65A100D7C973 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2389A6FD1E7C65A100D7C973 /* AppDelegate.swift */; };
 		2389A7031E7C65A100D7C973 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2389A7011E7C65A100D7C973 /* Main.storyboard */; };
@@ -74,6 +75,7 @@
 		2357D36320769CC1000AB50B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		23609DBA1EBA727800FD03FC /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		23666E33207C71FA0030033C /* AdditionalSnapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalSnapperViewController.swift; sourceTree = "<group>"; };
+		23666E35207EFD890030033C /* CreateButtonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateButtonCollectionViewCell.swift; sourceTree = "<group>"; };
 		23742B5D1F1D296E00F52C1B /* Classifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Classifier.swift; sourceTree = "<group>"; };
 		2389A6FA1E7C65A100D7C973 /* Visual Recognition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Visual Recognition.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2389A6FD1E7C65A100D7C973 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				23369D711F2C005A00033907 /* ClassesViewController.swift */,
 				23369D6D1F2BF9DB00033907 /* ClassesCollectionViewController.swift */,
 				23369D6E1F2BF9DB00033907 /* ClassCollectionViewCell.swift */,
+				23666E35207EFD890030033C /* CreateButtonCollectionViewCell.swift */,
 				2352A3071F194DDE00458F1F /* SnapperViewController.swift */,
 				23666E33207C71FA0030033C /* AdditionalSnapperViewController.swift */,
 				23C875281F25469400C3BBE8 /* NameClassViewController.swift */,
@@ -544,6 +547,7 @@
 				2389A6FE1E7C65A100D7C973 /* AppDelegate.swift in Sources */,
 				23DAFC681F0C7CC200216134 /* CameraViewController.swift in Sources */,
 				232B9F901E80A5AD00407BB8 /* ClassifiersTableViewController.swift in Sources */,
+				23666E36207EFD890030033C /* CreateButtonCollectionViewCell.swift in Sources */,
 				23AA52301EC0DC550073D4DC /* ClassifierTableViewCell.swift in Sources */,
 				23DAFC6A1F0C7D1200216134 /* PhotoCaptureDelegate.swift in Sources */,
 				232B9F8E1E808EA500407BB8 /* RoundedButton.swift in Sources */,

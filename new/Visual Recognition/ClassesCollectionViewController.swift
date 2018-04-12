@@ -118,17 +118,8 @@ class ClassesCollectionViewController: UICollectionViewController, ClassCellDele
             cell.classImageCountLabel.text = String(describing: classes[indexPath.item].imageCount)
             return cell
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "newClassCell", for: indexPath)
-            if isEditing {
-                cell.viewWithTag(0)?.alpha = 0.4
-            } else {
-                cell.viewWithTag(0)?.alpha = 1.0
-            }
-            cell.isUserInteractionEnabled = !isEditing
-            cell.viewWithTag(1)?.layer.cornerRadius = 5
-            cell.viewWithTag(1)?.clipsToBounds = true
-            cell.viewWithTag(1)?.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.15).cgColor
-            cell.viewWithTag(1)?.layer.borderWidth = 1.0 / UIScreen.main.scale
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "newClassCell", for: indexPath) as! CreateButtonCollectionViewCell
+            cell.isVisible = !isEditing
             return cell
         }
     }
@@ -167,6 +158,8 @@ class ClassesCollectionViewController: UICollectionViewController, ClassCellDele
     }
     
     func remove(cell: ClassCollectionViewCell) {
+        print("Bloop: remove")
+        
         guard let indexPath = collectionView?.indexPath(for: cell) else {
             return
         }
