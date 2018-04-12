@@ -10,6 +10,8 @@ import UIKit
 import CoreData
 import Alamofire
 
+// TODO: INSERTING AND DELETING TABLEVIEW ENTRIES STILL NEEDS WORK
+// - There was a crash when deleting the last draft, when no trained existed.
 class ClassifiersTableViewController: UITableViewController {
     let API_KEY: String = {
         if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
@@ -17,6 +19,8 @@ class ClassifiersTableViewController: UITableViewController {
         }
         return ""
     }()
+    
+    let DEBUG = true
     
     var pending = [PendingClassifier]()
     var classifiers = [Classifier]()
@@ -100,6 +104,18 @@ class ClassifiersTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         if #available(iOS 11.0, *) {
             self.navigationController?.navigationBar.prefersLargeTitles = true
+        }
+        
+        if DEBUG {
+            let fetchRequest:NSFetchRequest<PendingClassifier> = PendingClassifier.fetchRequest()
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(PendingClassifier.created), ascending: false)]
+            
+            do {
+                let _ = try DatabaseController.getContext().fetch(fetchRequest).map { result in
+                    print("\(result.name ?? "") | \(result.classifierId ?? "")")
+                }
+            } catch {
+            }
         }
         
         let fetchRequest:NSFetchRequest<PendingClassifier> = PendingClassifier.fetchRequest()

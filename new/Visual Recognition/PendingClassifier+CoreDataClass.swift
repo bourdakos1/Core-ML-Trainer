@@ -11,6 +11,7 @@ import CoreData
 import Zip
 import Alamofire
 
+// TODO: THIS IS A MESS THAT NEEDS CLEANING
 public class PendingClassifier: NSManagedObject {
     func train(completion: @escaping (_ results: Any) -> Void) {
         do {
@@ -27,11 +28,11 @@ public class PendingClassifier: NSManagedObject {
                     let jpgFiles = directoryContents.filter{ $0.pathExtension == "jpg" }
                     
                     if jpgFiles.count <= 0 {
-                        break
+                        continue
                     }
                     
                 } catch {
-                    break
+                    continue
                 }
                 
                 // If it does, start the zip process.

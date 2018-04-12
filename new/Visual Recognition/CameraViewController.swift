@@ -121,7 +121,8 @@ class CameraViewController: UIViewController, AVCaptureMetadataOutputObjectsDele
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        sessionQueue.async { [unowned self] in
+        sessionQueue.async { [weak self] in
+            guard let `self` = self else { return }
             if self.setupResult == .success {
                 self.session.stopRunning()
                 self.isSessionRunning = self.session.isRunning
